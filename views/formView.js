@@ -1,3 +1,5 @@
+import { refreshTasks, renderTasks } from "./tasksView.js";
+
 const addItemForm = document.querySelector(".form-add-item");
 const question1 = document.getElementById("question1");
 const question2 = document.getElementById("question2");
@@ -17,17 +19,21 @@ const submitHandler = function (e) {
     return;
   }
 
+  const taskInfo = { task, time };
+
   requiredQuestion.classList.remove("required");
 
-  taskArr.push([task, time]);
-
-  console.log(taskArr);
+  taskArr.push(taskInfo);
 
   //reset form values
   question1.value = "";
   question2.value = "";
   question1.blur();
   question2.blur();
+
+  //render the new list
+  refreshTasks();
+  renderTasks();
 };
 
-export { addItemForm, submitHandler };
+export { addItemForm, submitHandler, taskArr };
