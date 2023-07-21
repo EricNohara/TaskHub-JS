@@ -272,6 +272,10 @@ input[type="checkbox"] {
   margin-bottom: 40px;
 }
 
+#question1::placeholder {
+  font-style: italic;
+}
+
 input[type="text"],
 select,
 textarea {
@@ -282,6 +286,18 @@ textarea {
   box-sizing: border-box;
   resize: vertical;
   font-size: 20px;
+}
+
+/* Toggleable classes */
+.required {
+  color: rgb(196, 0, 0);
+
+  #question1 {
+    border: 3px solid rgb(196, 0, 0);
+  }
+  #question1::placeholder {
+    color: rgb(196, 0, 0);
+  }
 }
 
 .hidden {

@@ -1,4 +1,4 @@
-import { addItemForm, submitHandler } from "./formView";
+import { addItemForm, submitHandler } from "./formView.js";
 
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");
