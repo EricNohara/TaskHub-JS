@@ -1,8 +1,11 @@
+import { addItemForm, submitHandler } from "./formView";
+
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");
 const exitBtn = document.querySelector(".btn-exit");
 const openFormBtn = document.querySelector(".btn-open-form");
 
+//Function to handle adding and removing hidden class to elements
 const toggleHidden = function (e) {
   //toggle hidden class after the animation
   setTimeout(() => listContainer.classList.toggle("hidden"), 300);
@@ -19,6 +22,12 @@ const toggleHidden = function (e) {
   }
 };
 
-openFormBtn.addEventListener("click", toggleHidden);
+const init = function () {
+  openFormBtn.addEventListener("click", toggleHidden);
 
-exitBtn.addEventListener("click", toggleHidden);
+  exitBtn.addEventListener("click", toggleHidden);
+
+  addItemForm.addEventListener("submit", submitHandler);
+};
+
+init();
