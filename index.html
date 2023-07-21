@@ -4,30 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
     <script type="module" src="script.js"></script>
   </head>
   <body>
-    <div class="list-container hidden">
-      <h1>To Do List</h1>
-      <button class="btn-open-form">+</button>
-      <button class="btn-sort-tasks">sort</button>
+    <div class="list-container">
+      <div class="nav">
+        <h1 class="list-header">To Do List</h1>
+        <button class="btn-open-form">
+          <p>+</p>
+          Add Task
+        </button>
+        <button class="btn-sort-tasks">
+          <img class="sort-icon" src="/imgs/sort.png" alt="Sort Tasks Button" />
+          sort
+        </button>
+      </div>
       <ul>
-        <li>Add your first item to the list</li>
+        <li class="start-msg">Click + to add first task to list</li>
         <li class="list-item">
-          <input type="checkbox" />
-          Laundry
+          <div class="list-task">
+            <input class="checkbox" type="checkbox" />
+            <p class="task">Laundry</p>
+          </div>
+          <div class="task-actions">
+            <img class="star-icon" src="/imgs/star.png" alt="Favorited Icon" />
+            <button class="btn-remove-task">Remove</button>
+          </div>
         </li>
         <li class="list-item">
-          <input type="checkbox" checked />
-          Dishes
+          <div class="list-task">
+            <input class="checkbox" type="checkbox" checked />
+            <p class="task">Dishes</p>
+          </div>
         </li>
       </ul>
     </div>
 
-    <div class="form-container">
+    <div class="form-container hidden">
       <h3 class="form-header">Enter Task to Add to List</h3>
-      <button class="btn-exit">&#10005;</button>
+      <div class="exit"><button class="btn-exit">&#10005;</button></div>
 
       <form action="adding form items" method="get" class="form-add-item">
         <div class="question">
