@@ -1,4 +1,5 @@
 import { addItemForm, submitHandler } from "./views/formView.js";
+import { checkboxes, checkedHandler } from "./views/taskActionView.js";
 
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");

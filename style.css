@@ -11,7 +11,8 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(45deg, #c6616d, #ffe8e4);
+  width: 100vw;
+  background: #c27b84;
 }
 
 button {
@@ -44,6 +45,7 @@ button:active {
 .btn-open-form {
   height: 50%;
   width: 18%;
+  min-width: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,6 +73,7 @@ button:active {
 .btn-sort-tasks {
   height: 50%;
   width: 18%;
+  min-width: 150px;
   margin-right: 40px;
   display: flex;
   align-items: center;
@@ -113,8 +116,8 @@ ul {
   grid-template-rows: 150px;
   grid-row: 1/2;
   grid-column: 1/2;
-  height: 95vh;
   width: 70vw;
+  min-width: 600px;
   background-color: #fff6f5;
 }
 
@@ -126,6 +129,7 @@ ul {
   margin-bottom: 15px;
   gap: 12px;
   background-color: #f1e9e9;
+  padding: 15px;
 }
 
 .task-info {
@@ -187,9 +191,12 @@ input[type="checkbox"] {
 }
 
 .start-msg {
-  font-size: 20px;
+  font-size: 22px;
   font-style: italic;
   color: rgb(158, 158, 158);
+  background-color: inherit;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
 .task {
@@ -298,7 +305,7 @@ textarea {
   color: rgb(196, 0, 0);
 
   #question1 {
-    border: 3px solid rgb(196, 0, 0);
+    border: 1px solid rgb(196, 0, 0);
   }
   #question1::placeholder {
     color: rgb(196, 0, 0);
