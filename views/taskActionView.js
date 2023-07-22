@@ -1,8 +1,13 @@
 let checkboxes;
+let removeBtns;
 
 //used to get the current checkboxes in the window
 const getCheckBoxes = function () {
   checkboxes = [...document.querySelectorAll(".checkbox")];
+};
+
+const getRemoveBtns = function () {
+  removeBtns = [...document.querySelectorAll(".btn-remove-task")];
 };
 
 const checkedHandler = function (e) {
@@ -12,4 +17,15 @@ const checkedHandler = function (e) {
     .classList.toggle("hidden");
 };
 
-export { checkboxes, checkedHandler, getCheckBoxes };
+const removedHandler = function (e) {
+  e.target.closest(".list-item").classList.toggle("hidden");
+};
+
+export {
+  checkboxes,
+  removeBtns,
+  checkedHandler,
+  removedHandler,
+  getCheckBoxes,
+  getRemoveBtns,
+};
