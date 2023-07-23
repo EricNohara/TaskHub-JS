@@ -21,7 +21,7 @@ const refreshTasks = function () {
 
 const generateMarkup = function (listEl) {
   return `
-    <li class="list-item">
+    <li class="list-item item${taskArr.indexOf(listEl)}">
         <div class="task-info">
         <input class="checkbox" type="checkbox" />
             <p class="task">${listEl.task}</p>

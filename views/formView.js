@@ -15,31 +15,15 @@ const requiredQuestion = document.querySelector(".required-question");
 
 let taskArr = [];
 
-//function to handle submission of the form
-const submitHandler = function (e) {
-  e.preventDefault();
-
-  const task = question1.value;
-  const time = question2.value;
-
-  if (task === "") {
-    requiredQuestion.classList.add("required");
-    return;
-  }
-
-  const taskInfo = { task, time };
-
-  requiredQuestion.classList.remove("required");
-
-  taskArr.push(taskInfo);
-
+const resetForm = function () {
   //reset form values
   question1.value = "";
   question2.value = "";
   question1.blur();
   question2.blur();
+};
 
-  //render the new list
+const renderList = function () {
   refreshTasks();
   renderTasks();
   getCheckBoxes();
@@ -50,6 +34,35 @@ const submitHandler = function (e) {
 
   //add event listener for each remove button
   removeBtns.forEach((btn) => btn.addEventListener("click", removedHandler));
+};
+
+//function to handle submission of the form
+const submitHandler = function (e) {
+  e.preventDefault();
+
+  //getting the inputted values
+  const task = question1.value;
+  const time = question2.value;
+
+  //gaurd clause: if first field is empty, show the field is required
+  if (task === "") {
+    requiredQuestion.classList.add("required");
+    return;
+  }
+
+  //creating the task object
+  const taskInfo = { task, time };
+
+  //remove the required class after valid form submission
+  requiredQuestion.classList.remove("required");
+
+  taskArr.push(taskInfo);
+
+  //reset form
+  resetForm();
+
+  //render the new list
+  renderList();
 };
 
 export { addItemForm, submitHandler, taskArr };

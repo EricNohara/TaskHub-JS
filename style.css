@@ -102,7 +102,6 @@ button:active {
   margin-right: 12px;
   filter: invert(46%) sepia(57%) saturate(423%) hue-rotate(303deg)
     brightness(91%) contrast(100%);
-  transition-duration: 0.2s;
 }
 
 /* FORMATTING THE LIST */
@@ -117,6 +116,7 @@ ul {
   grid-row: 1/2;
   grid-column: 1/2;
   width: 70vw;
+  min-height: 90vh;
   min-width: 600px;
   background-color: #fff6f5;
 }
@@ -201,6 +201,26 @@ input[type="checkbox"] {
 
 .task {
   margin: 0 20px;
+}
+
+.btn-important {
+  position: absolute;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 3px solid rgb(237, 158, 0);
+  border-radius: 10px;
+  color: rgb(237, 158, 0);
+  background-color: white;
+  padding: 20px 10px;
+  right: 20px;
+  top: 87%;
+  transition-duration: 0.4s;
+}
+
+.btn-important:hover {
+  color: white;
+  background-color: rgb(237, 158, 0);
 }
 
 /* FORMATTING THE FORM */

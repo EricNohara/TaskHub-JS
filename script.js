@@ -1,10 +1,12 @@
 import { addItemForm, submitHandler } from "./views/formView.js";
 import { checkboxes, checkedHandler } from "./views/taskActionView.js";
+import { importantBtnHandler } from "./views/importantView.js";
 
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");
 const exitBtn = document.querySelector(".btn-exit");
 const openFormBtn = document.querySelector(".btn-open-form");
+const importantBtn = document.querySelector(".btn-important");
 
 //Function to handle adding and removing hidden class to elements
 const toggleHidden = function (e) {
@@ -29,6 +31,8 @@ const init = function () {
   exitBtn.addEventListener("click", toggleHidden);
 
   addItemForm.addEventListener("submit", submitHandler);
+
+  importantBtn.addEventListener("click", importantBtnHandler);
 };
 
 init();
