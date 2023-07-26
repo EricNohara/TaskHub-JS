@@ -1,12 +1,6 @@
 import { refreshTasks, renderTasks } from "./tasksView.js";
-import {
-  checkboxes,
-  removeBtns,
-  checkedHandler,
-  removedHandler,
-  getCheckBoxes,
-  getRemoveBtns,
-} from "./taskActionView.js";
+import { checkboxes, checkedHandler, getCheckBoxes } from "./checkedView.js";
+import { removeBtns, getRemoveBtns, removedHandler } from "./removeView.js";
 
 const addItemForm = document.querySelector(".form-add-item");
 const question1 = document.getElementById("question1");
@@ -25,8 +19,11 @@ const resetForm = function () {
 };
 
 const renderList = function () {
+  //refreshing and rendering the list
   refreshTasks();
   renderTasks();
+
+  //getting the checkboxes and remove buttons currently on the page
   getCheckBoxes();
   getRemoveBtns();
 
@@ -78,6 +75,11 @@ const submitHandler = function (e) {
 const removeFromTaskArr = function (e) {
   const index = +e.target.closest(".list-item").classList[1].slice(-1);
 
+  //reassign list number fields for tasks in the taskArr
+  taskArr.forEach((el) => {
+    if (el.itemNum > index) el.itemNum--;
+  });
+
   //remove the correct element from taskArr
   taskArr = [
     ...copyTaskArr.slice(0, index),
@@ -88,4 +90,4 @@ const removeFromTaskArr = function (e) {
   copyTaskArr[index] = undefined;
 };
 
-export { addItemForm, submitHandler, taskArr, removeFromTaskArr };
+export { addItemForm, submitHandler, taskArr, copyTaskArr, removeFromTaskArr };

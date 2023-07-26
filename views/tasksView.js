@@ -1,5 +1,5 @@
 import { taskArr } from "./formView.js";
-import { checked } from "./taskActionView.js";
+import { checked } from "./checkedView.js";
 
 const listElementsContainer = document.querySelector(".list-elements");
 
@@ -22,7 +22,7 @@ const refreshTasks = function () {
 
 const generateMarkup = function (listEl) {
   return `
-    <li class="list-item item${taskArr.indexOf(listEl)}">
+    <li class="list-item item${listEl.itemNum}">
         <div class="task-info">
         <input class="checkbox" type="checkbox" ${
           listEl.checked ? "checked" : ""

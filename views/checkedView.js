@@ -1,17 +1,12 @@
-import { taskArr, removeFromTaskArr } from "./formView.js";
+import { taskArr } from "./formView.js";
 import { refreshTasks, renderTasks } from "./tasksView.js";
 
 let checkboxes;
-let removeBtns;
 let checked = [];
 
 //used to get the current checkboxes in the window
 const getCheckBoxes = function () {
   checkboxes = [...document.querySelectorAll(".checkbox")];
-};
-
-const getRemoveBtns = function () {
-  removeBtns = [...document.querySelectorAll(".btn-remove-task")];
 };
 
 //this is where the issue is somewhere with removing the wrong element
@@ -55,25 +50,10 @@ const checkedHandler = function (e) {
     document.querySelector(".btn-important").classList.remove("hidden");
 };
 
-const removedHandler = function (e) {
-  // e.target.closest(".list-item").classList.toggle("hidden");
-  removeFromCheckedArr(e);
-  console.log(checked);
-  removeFromTaskArr(e);
-  console.log(taskArr);
-  if (taskArr.length === 0)
-    document.querySelector(".btn-important").classList.add("hidden");
-
-  refreshTasks();
-  renderTasks();
-};
-
 export {
   checkboxes,
-  removeBtns,
   checked,
   checkedHandler,
-  removedHandler,
   getCheckBoxes,
-  getRemoveBtns,
+  removeFromCheckedArr,
 };

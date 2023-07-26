@@ -1,4 +1,4 @@
-import { checked } from "./taskActionView.js";
+import { checked } from "./checkedView.js";
 import { taskArr } from "./formView.js";
 
 const addImportantAttribute = function (el) {
