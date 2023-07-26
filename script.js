@@ -26,9 +26,21 @@ const toggleHidden = function (e) {
 };
 
 const init = function () {
-  openFormBtn.addEventListener("click", toggleHidden);
+  let importantBtnToggled = false;
 
-  exitBtn.addEventListener("click", toggleHidden);
+  openFormBtn.addEventListener("click", (e) => {
+    toggleHidden(e);
+    if (!(importantBtn.classList[1] === "hidden")) {
+      importantBtnToggled = true;
+      importantBtn.classList.add("hidden");
+    }
+  });
+
+  exitBtn.addEventListener("click", (e) => {
+    toggleHidden(e);
+    if (importantBtnToggled) importantBtn.classList.remove("hidden");
+    importantBtnToggled = false;
+  });
 
   addItemForm.addEventListener("submit", submitHandler);
 

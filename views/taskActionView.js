@@ -1,4 +1,5 @@
-import { taskArr } from "./formView.js";
+import { taskArr, removeFromTaskArr } from "./formView.js";
+import { refreshTasks, renderTasks } from "./tasksView.js";
 
 let checkboxes;
 let removeBtns;
@@ -13,10 +14,14 @@ const getRemoveBtns = function () {
   removeBtns = [...document.querySelectorAll(".btn-remove-task")];
 };
 
+//this is where the issue is somewhere with removing the wrong element
 const removeFromCheckedArr = function (e) {
   const index = checked.indexOf(
     e.target.closest(".list-item").querySelector(".star-icon")
   );
+
+  // console.log(e.target.closest(".list-item"));
+  // console.log(index);
 
   //removing the correct list item based on what box was unchecked
   checked = [
@@ -25,21 +30,23 @@ const removeFromCheckedArr = function (e) {
   ];
 };
 
-const removeFromTaskArr = function (e) {
-  //
-};
-
 const checkedHandler = function (e) {
   //selecting the closest remove button from the checked box and making it visible
   e.target.parentNode.nextElementSibling
     .querySelector(".btn-remove-task")
     .classList.toggle("hidden");
 
+  //finding correct index in taskArr
+  const index = +e.target.closest(".list-item").classList[1].slice(-1);
+
   //update the checked array for use in selecting all checked elements to mark as important
-  if (e.target.checked)
+  if (e.target.checked) {
     checked.push(e.target.closest(".list-item").querySelector(".star-icon"));
+    if (taskArr[index]) taskArr[index].checked = true;
+  }
   if (!e.target.checked) {
     removeFromCheckedArr(e);
+    if (taskArr[index]) taskArr[index].checked = false;
     //unhide the important button
     if (checked.length === 0)
       document.querySelector(".btn-important").classList.add("hidden");
@@ -49,11 +56,16 @@ const checkedHandler = function (e) {
 };
 
 const removedHandler = function (e) {
-  e.target.closest(".list-item").classList.toggle("hidden");
+  // e.target.closest(".list-item").classList.toggle("hidden");
   removeFromCheckedArr(e);
+  console.log(checked);
+  removeFromTaskArr(e);
   console.log(taskArr);
-  if (checked.length === 0)
+  if (taskArr.length === 0)
     document.querySelector(".btn-important").classList.add("hidden");
+
+  refreshTasks();
+  renderTasks();
 };
 
 export {
