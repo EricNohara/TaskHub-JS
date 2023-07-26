@@ -33,6 +33,8 @@ button:active {
   align-items: center;
   height: 150px;
   background-color: #fedade;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .list-header {
@@ -111,6 +113,7 @@ ul {
 
 .list-container {
   border: 5px solid #53282d;
+  border-radius: 10px;
   display: grid;
   grid-template-rows: 150px;
   grid-row: 1/2;
@@ -308,7 +311,16 @@ input[type="checkbox"] {
   font-style: italic;
 }
 
+#question1 {
+  padding: 20px;
+}
+
+#question2 {
+  padding: 20px;
+}
+
 input[type="text"],
+input[type="time"],
 select,
 textarea {
   width: 80%;

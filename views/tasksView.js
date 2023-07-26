@@ -20,6 +20,18 @@ const refreshTasks = function () {
   [...allListitems].forEach((item) => item.remove());
 };
 
+const generateFormattedTime = function (listEl) {
+  return `${
+    parseInt(listEl.time.slice(0, 2)) === 12
+      ? 12
+      : parseInt(listEl.time.slice(0, 2)) === 0
+      ? 12
+      : parseInt(listEl.time.slice(0, 2)) % 12
+  }${listEl.time.slice(2)} ${
+    parseInt(listEl.time.slice(0, 2)) >= 12 ? "PM" : "AM"
+  }`;
+};
+
 const generateMarkup = function (listEl) {
   return `
     <li class="list-item item${listEl.itemNum}">
@@ -28,7 +40,10 @@ const generateMarkup = function (listEl) {
           listEl.checked ? "checked" : ""
         }/>
             <p class="task">${listEl.task}</p>
-            <p class="task-time">${listEl.time}</p>
+            <p class="task-time">${
+              listEl.time === "" ? "" : generateFormattedTime(listEl)
+            }
+            </p>
         </div>
         <div class="task-actions">
             <img class="star-icon ${
