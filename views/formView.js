@@ -52,7 +52,14 @@ const submitHandler = function (e) {
   }
 
   //creating the task object
-  const taskInfo = { task, time, important: false, checked: false };
+  //each task is an object containing the task, time, important and checked status, and item number
+  const taskInfo = {
+    task,
+    time,
+    important: false,
+    checked: false,
+    itemNum: taskArr.length,
+  };
 
   //remove the required class after valid form submission
   requiredQuestion.classList.remove("required");
