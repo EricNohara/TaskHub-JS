@@ -15,9 +15,6 @@ const removeFromCheckedArr = function (e) {
     e.target.closest(".list-item").querySelector(".star-icon")
   );
 
-  // console.log(e.target.closest(".list-item"));
-  // console.log(index);
-
   //removing the correct list item based on what box was unchecked
   checked = [
     ...checked.splice(0, index),
@@ -27,7 +24,8 @@ const removeFromCheckedArr = function (e) {
 
 const checkedHandler = function (e) {
   //selecting the closest remove button from the checked box and making it visible
-  e.target.parentNode.nextElementSibling
+  e.target
+    .closest(".list-item")
     .querySelector(".btn-remove-task")
     .classList.toggle("hidden");
 

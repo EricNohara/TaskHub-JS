@@ -8,7 +8,6 @@ const question2 = document.getElementById("question2");
 const requiredQuestion = document.querySelector(".required-question");
 
 let taskArr = [];
-let copyTaskArr;
 
 const resetForm = function () {
   //reset form values
@@ -68,8 +67,6 @@ const submitHandler = function (e) {
 
   //render the new list
   renderList();
-
-  copyTaskArr = [...taskArr];
 };
 
 const removeFromTaskArr = function (e) {
@@ -82,12 +79,9 @@ const removeFromTaskArr = function (e) {
 
   //remove the correct element from taskArr
   taskArr = [
-    ...copyTaskArr.slice(0, index),
-    ...copyTaskArr.slice(index + 1, copyTaskArr.length),
-  ].filter((el) => el);
-
-  //set placeholder values for removed elements
-  copyTaskArr[index] = undefined;
+    ...taskArr.slice(0, index),
+    ...taskArr.slice(index + 1, taskArr.length),
+  ];
 };
 
-export { addItemForm, submitHandler, taskArr, copyTaskArr, removeFromTaskArr };
+export { addItemForm, submitHandler, taskArr, removeFromTaskArr, renderList };

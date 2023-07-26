@@ -1,6 +1,5 @@
-import { taskArr, removeFromTaskArr } from "./formView.js";
-import { removeFromCheckedArr } from "./checkedView.js";
-import { refreshTasks, renderTasks } from "./tasksView.js";
+import { taskArr, removeFromTaskArr, renderList } from "./formView.js";
+import { removeFromCheckedArr, checked } from "./checkedView.js";
 
 let removeBtns;
 
@@ -18,8 +17,7 @@ const removedHandler = function (e) {
     document.querySelector(".btn-important").classList.add("hidden");
 
   //refresh and rerender the list
-  refreshTasks();
-  renderTasks();
+  renderList();
 };
 
 export { removeBtns, getRemoveBtns, removedHandler };
