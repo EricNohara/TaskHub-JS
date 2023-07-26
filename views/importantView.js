@@ -1,25 +1,24 @@
 import { checked } from "./checkedView.js";
-import { taskArr } from "./formView.js";
+import { taskArr, renderList } from "./formView.js";
 
 const addImportantAttribute = function (el) {
-  //selecting only the index property
+  //selecting index of the task in the taskArr
   const index = el.closest(".list-item").classList[1].slice(-1);
 
-  console.log(index);
-
-  if (!el.closest(".list-item").querySelector(".star-icon").classList[1])
-    taskArr[index].important = true;
+  //reassigning the important field for the currently selected task
+  if (!taskArr[index].important) taskArr[index].important = true;
   else taskArr[index].important = false;
 };
 
 const importantBtnHandler = function () {
-  checked.forEach((el) => el.classList.toggle("hidden"));
-
+  console.log(checked);
+  //adding the important attribute to all tasks currently checked
   checked.forEach((el) => {
-    console.log(el.closest(".list-item"));
-    console.log(checked);
     addImportantAttribute(el);
   });
+
+  //rerender the list with updated important field values
+  renderList();
 };
 
 export { importantBtnHandler };

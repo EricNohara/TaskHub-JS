@@ -42,8 +42,10 @@ const init = function () {
     importantBtnToggled = false;
   });
 
+  //event handler listening for form submission
   addItemForm.addEventListener("submit", submitHandler);
 
+  //event handler for the important button
   importantBtn.addEventListener("click", importantBtnHandler);
 };
 

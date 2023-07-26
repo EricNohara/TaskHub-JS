@@ -1,5 +1,4 @@
 import { taskArr } from "./formView.js";
-import { refreshTasks, renderTasks } from "./tasksView.js";
 
 let checkboxes;
 let checked = [];
@@ -9,11 +8,14 @@ const getCheckBoxes = function () {
   checkboxes = [...document.querySelectorAll(".checkbox")];
 };
 
-//this is where the issue is somewhere with removing the wrong element
 const removeFromCheckedArr = function (e) {
-  const index = checked.indexOf(
-    e.target.closest(".list-item").querySelector(".star-icon")
-  );
+  const index = +e.target.closest(".list-item").classList[1].slice(-1);
+
+  //reasssigning all of the values that are chenged by the current task being unchecked
+  checked.forEach((el, i) => {
+    if (i > index)
+      el = `${el.slice(-1)}${+el.slice(el.length - 1, el.length) - 1}`;
+  });
 
   //removing the correct list item based on what box was unchecked
   checked = [
@@ -34,12 +36,12 @@ const checkedHandler = function (e) {
 
   //update the checked array for use in selecting all checked elements to mark as important
   if (e.target.checked) {
-    checked.push(e.target.closest(".list-item").querySelector(".star-icon"));
-    if (taskArr[index]) taskArr[index].checked = true;
+    checked.push(e.target.closest(".list-item").classList[1]);
+    taskArr[index].checked = true;
   }
   if (!e.target.checked) {
     removeFromCheckedArr(e);
-    if (taskArr[index]) taskArr[index].checked = false;
+    taskArr[index].checked = false;
     //unhide the important button
     if (checked.length === 0)
       document.querySelector(".btn-important").classList.add("hidden");
