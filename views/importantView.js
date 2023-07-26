@@ -11,7 +11,6 @@ const addImportantAttribute = function (el) {
 };
 
 const importantBtnHandler = function () {
-  console.log(checked);
   //adding the important attribute to all tasks currently checked
   checked.forEach((el) => {
     addImportantAttribute(el);

@@ -1,5 +1,6 @@
 import { taskArr } from "./formView.js";
 
+//declare global scope
 let checkboxes;
 let checked = [];
 
@@ -8,20 +9,26 @@ const getCheckBoxes = function () {
   checkboxes = [...document.querySelectorAll(".checkbox")];
 };
 
-const removeFromCheckedArr = function (e) {
-  const index = +e.target.closest(".list-item").classList[1].slice(-1);
+//function to reassign the element task numbers in the checked array after an element is removed
+const reassignChecked = function (e) {
+  //selecting the task number for the element that was removed from the task array
+  const removedTaskNum = e.target.closest(".list-item").classList[1].slice(-1);
 
-  //reasssigning all of the values that are changed by the current task being unchecked
+  // reasssigning all of the values that are changed by the current task being unchecked
   checked = checked.map((el) => {
-    if (el.slice(-1) > index)
+    if (el.slice(-1) > removedTaskNum)
       return `${el.slice(0, el.length - 1)}${el.slice(-1) - 1}`;
     return el;
   });
+};
+
+const removeFromCheckedArr = function (e) {
+  const index = checked.indexOf(e.target.closest(".list-item").classList[1]);
 
   //removing the correct list item based on what box was unchecked
   checked = [
-    ...checked.splice(0, index),
-    ...checked.splice(index + 1, checked.length),
+    ...checked.slice(0, index),
+    ...checked.slice(index + 1, checked.length),
   ];
 };
 
@@ -57,4 +64,5 @@ export {
   checkedHandler,
   getCheckBoxes,
   removeFromCheckedArr,
+  reassignChecked,
 };

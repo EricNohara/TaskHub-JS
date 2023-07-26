@@ -1,5 +1,9 @@
 import { taskArr, removeFromTaskArr, renderList } from "./formView.js";
-import { removeFromCheckedArr, checked } from "./checkedView.js";
+import {
+  removeFromCheckedArr,
+  checked,
+  reassignChecked,
+} from "./checkedView.js";
 
 let removeBtns;
 
@@ -18,6 +22,9 @@ const removedHandler = function (e) {
 
   //refresh and rerender the list
   renderList();
+
+  //reassign needed values in the checked array
+  reassignChecked(e);
 };
 
 export { removeBtns, getRemoveBtns, removedHandler };
