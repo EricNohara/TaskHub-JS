@@ -3,7 +3,7 @@ import { taskArr, renderList } from "./formView.js";
 
 const addImportantAttribute = function (el) {
   //selecting index of the task in the taskArr
-  const index = el.closest(".list-item").classList[1].slice(-1);
+  const index = el.slice(-1);
 
   //reassigning the important field for the currently selected task
   if (!taskArr[index].important) taskArr[index].important = true;

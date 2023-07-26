@@ -11,10 +11,11 @@ const getCheckBoxes = function () {
 const removeFromCheckedArr = function (e) {
   const index = +e.target.closest(".list-item").classList[1].slice(-1);
 
-  //reasssigning all of the values that are chenged by the current task being unchecked
-  checked.forEach((el, i) => {
-    if (i > index)
-      el = `${el.slice(-1)}${+el.slice(el.length - 1, el.length) - 1}`;
+  //reasssigning all of the values that are changed by the current task being unchecked
+  checked = checked.map((el) => {
+    if (el.slice(-1) > index)
+      return `${el.slice(0, el.length - 1)}${el.slice(-1) - 1}`;
+    return el;
   });
 
   //removing the correct list item based on what box was unchecked
