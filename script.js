@@ -1,12 +1,14 @@
 import { addItemForm, submitHandler } from "./views/formView.js";
 import { checkboxes, checkedHandler } from "./views/checkedView.js";
 import { importantBtnHandler } from "./views/importantView.js";
+import { sortHandler } from "./views/sortView.js";
 
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");
 const exitBtn = document.querySelector(".btn-exit");
 const openFormBtn = document.querySelector(".btn-open-form");
 const importantBtn = document.querySelector(".btn-important");
+const sortBtn = document.querySelector(".btn-sort-tasks");
 
 //Function to handle adding and removing hidden class to elements
 const toggleHidden = function (e) {
@@ -47,6 +49,9 @@ const init = function () {
 
   //event handler for the important button
   importantBtn.addEventListener("click", importantBtnHandler);
+
+  //event handler for the sort button
+  sortBtn.addEventListener("click", sortHandler);
 };
 
 init();

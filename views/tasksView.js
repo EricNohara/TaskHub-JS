@@ -8,6 +8,11 @@ const renderTasks = function () {
   let markup = "";
   taskArr.forEach((listEl) => (markup += generateMarkup(listEl)));
 
+  //rerender the starting message if there are no tasks
+  if (taskArr.length === 0)
+    markup =
+      '<li class="start-msg list-item">Click + to add first task to list</li>';
+
   //insert markup to the parent class
   listElementsContainer.insertAdjacentHTML("afterbegin", markup);
 };
