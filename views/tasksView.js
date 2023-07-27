@@ -1,5 +1,4 @@
 import { taskArr } from "./formView.js";
-import { checked } from "./checkedView.js";
 
 const listElementsContainer = document.querySelector(".list-elements");
 

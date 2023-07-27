@@ -1,10 +1,48 @@
-import { taskArr } from "./formView.js";
+import { taskArr, renderList } from "./formView.js";
+
+//global scope
+let importantTasks = [];
+let nonImportantTasks = [];
+
+const sortTasks = function () {
+  const removeEl = function (el, arr) {
+    const index = arr.indexOf(el);
+    return [...arr.slice(0, index), ...arr.slice(index + 1, arr.length)];
+  };
+
+  //map tasks marked as important to the importantTasks array
+  taskArr.forEach((el) => {
+    if (el.important) {
+      if (!importantTasks.includes(el)) importantTasks.push(el);
+      if (nonImportantTasks.includes(el)) {
+        nonImportantTasks = removeEl(el, nonImportantTasks);
+      }
+    } else if (!el.important) {
+      //if task is not important but is in the important array, remove from important array
+      if (importantTasks.includes(el)) {
+        importantTasks = removeEl(el, importantTasks);
+      }
+      //push the unimportant task to the correct array
+      if (!nonImportantTasks.includes(el)) nonImportantTasks.push(el);
+    }
+  });
+
+  //generating the new taskArr
+  taskArr = [...importantTasks, ...nonImportantTasks];
+};
 
 const sortHandler = function (e) {
   //guard clause
   if (taskArr.length === 0) return;
 
-  console.log(taskArr.length);
+  //handle correctly depending on if the list is already sorted
+  sortTasks();
+
+  console.log("important: ", importantTasks);
+  console.log("non important: ", nonImportantTasks);
+
+  //rerender the list with the new order
+  renderList();
 };
 
 export { sortHandler };
