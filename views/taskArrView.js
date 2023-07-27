@@ -27,4 +27,8 @@ const removeFromTaskArr = function (e) {
   ];
 };
 
-export { taskArr, removeFromTaskArr, createNewTask };
+const sortTaskArr = function (arr) {
+  taskArr = arr;
+};
+
+export { taskArr, removeFromTaskArr, createNewTask, sortTaskArr };

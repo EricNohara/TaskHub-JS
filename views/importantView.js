@@ -4,7 +4,10 @@ import { taskArr } from "./taskArrView.js";
 
 const addImportantAttribute = function (el) {
   //selecting index of the task in the taskArr
-  const index = el.slice(-1);
+  const elementIndex = +el.slice(-1);
+  const index = taskArr.findIndex(
+    (element) => element.itemNum === elementIndex
+  );
 
   //reassigning the important field for the currently selected task
   if (!taskArr[index].important) taskArr[index].important = true;
@@ -12,6 +15,7 @@ const addImportantAttribute = function (el) {
 };
 
 const importantBtnHandler = function () {
+  console.log("checked: ", checked);
   //adding the important attribute to all tasks currently checked
   checked.forEach((el) => {
     addImportantAttribute(el);

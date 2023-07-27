@@ -11,6 +11,7 @@ const getCheckBoxes = function () {
 
 //function to reassign the element task numbers in the checked array after an element is removed
 const reassignChecked = function (e) {
+  console.log("reassigning...");
   //selecting the task number for the element that was removed from the task array
   const removedTaskNum = e.target.closest(".list-item").classList[1].slice(-1);
 
@@ -24,6 +25,8 @@ const reassignChecked = function (e) {
 
 const removeFromCheckedArr = function (e) {
   const index = checked.indexOf(e.target.closest(".list-item").classList[1]);
+
+  console.log("removing...");
 
   //removing the correct list item based on what box was unchecked
   checked = [
@@ -40,7 +43,10 @@ const checkedHandler = function (e) {
     .classList.toggle("hidden");
 
   //finding correct index in taskArr
-  const index = +e.target.closest(".list-item").classList[1].slice(-1);
+  const index = +taskArr.findIndex(
+    (el) =>
+      el.itemNum === +e.target.closest(".list-item").classList[1].slice(-1)
+  );
 
   //update the checked array for use in selecting all checked elements to mark as important
   if (e.target.checked) {
@@ -58,6 +64,20 @@ const checkedHandler = function (e) {
     document.querySelector(".btn-important").classList.remove("hidden");
 };
 
+const clearCheckedArr = function () {
+  checked.length = 0;
+};
+
+const refreshCheckedArr = function (arr) {
+  clearCheckedArr();
+  arr.forEach((el) => {
+    if (el.checked) checked.push(`item${el.itemNum}`);
+  });
+
+  console.log("taskArr: ", taskArr);
+  console.log("checked: ", checked);
+};
+
 export {
   checkboxes,
   checked,
@@ -65,4 +85,5 @@ export {
   getCheckBoxes,
   removeFromCheckedArr,
   reassignChecked,
+  refreshCheckedArr,
 };

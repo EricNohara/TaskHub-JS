@@ -1,5 +1,6 @@
 import { renderList } from "./formView.js";
-import { taskArr } from "./taskArrView.js";
+import { taskArr, sortTaskArr } from "./taskArrView.js";
+import { refreshCheckedArr } from "./checkedView.js";
 
 //global scope
 let importantTasks = [];
@@ -29,7 +30,7 @@ const sortTasks = function () {
   });
 
   //generating the new taskArr
-  taskArr = [...importantTasks, ...nonImportantTasks];
+  sortTaskArr([...importantTasks, ...nonImportantTasks]);
 };
 
 const sortHandler = function (e) {
@@ -39,10 +40,8 @@ const sortHandler = function (e) {
   //handle correctly depending on if the list is already sorted
   sortTasks();
 
-  console.log("important: ", importantTasks);
-  console.log("non important: ", nonImportantTasks);
-
   //rerender the list with the new order
+  refreshCheckedArr(taskArr);
   renderList();
 };
 
