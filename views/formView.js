@@ -1,13 +1,12 @@
 import { refreshTasks, renderTasks } from "./tasksView.js";
 import { checkboxes, checkedHandler, getCheckBoxes } from "./checkedView.js";
 import { removeBtns, getRemoveBtns, removedHandler } from "./removeView.js";
+import { taskArr, createNewTask } from "./taskArrView.js";
 
 const addItemForm = document.querySelector(".form-add-item");
 const question1 = document.getElementById("question1");
 const question2 = document.getElementById("question2");
 const requiredQuestion = document.querySelector(".required-question");
-
-let taskArr = [];
 
 const resetForm = function () {
   //reset form values
@@ -49,18 +48,10 @@ const submitHandler = function (e) {
 
   //creating the task object
   //each task is an object containing the task, time, important and checked status, and item number
-  const taskInfo = {
-    task,
-    time,
-    important: false,
-    checked: false,
-    itemNum: taskArr.length,
-  };
+  createNewTask(task, time);
 
   //remove the required class after valid form submission
   requiredQuestion.classList.remove("required");
-
-  taskArr.push(taskInfo);
 
   //reset form
   resetForm();
@@ -69,19 +60,4 @@ const submitHandler = function (e) {
   renderList();
 };
 
-const removeFromTaskArr = function (e) {
-  const index = +e.target.closest(".list-item").classList[1].slice(-1);
-
-  //reassign list number fields for tasks in the taskArr
-  taskArr.forEach((el) => {
-    if (el.itemNum > index) el.itemNum--;
-  });
-
-  //remove the correct element from taskArr
-  taskArr = [
-    ...taskArr.slice(0, index),
-    ...taskArr.slice(index + 1, taskArr.length),
-  ];
-};
-
-export { addItemForm, submitHandler, taskArr, removeFromTaskArr, renderList };
+export { addItemForm, submitHandler, renderList };

@@ -1,9 +1,10 @@
-import { taskArr, removeFromTaskArr, renderList } from "./formView.js";
+import { renderList } from "./formView.js";
 import {
   removeFromCheckedArr,
   checked,
   reassignChecked,
 } from "./checkedView.js";
+import { taskArr, removeFromTaskArr } from "./taskArrView.js";
 
 let removeBtns;
 

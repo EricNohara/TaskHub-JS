@@ -1,4 +1,5 @@
-import { taskArr, renderList } from "./formView.js";
+import { renderList } from "./formView.js";
+import { taskArr } from "./taskArrView.js";
 
 //global scope
 let importantTasks = [];

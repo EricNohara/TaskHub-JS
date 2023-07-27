@@ -1,5 +1,6 @@
 import { checked } from "./checkedView.js";
-import { taskArr, renderList } from "./formView.js";
+import { renderList } from "./formView.js";
+import { taskArr } from "./taskArrView.js";
 
 const addImportantAttribute = function (el) {
   //selecting index of the task in the taskArr

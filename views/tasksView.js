@@ -1,4 +1,4 @@
-import { taskArr } from "./formView.js";
+import { taskArr } from "./taskArrView.js";
 
 const listElementsContainer = document.querySelector(".list-elements");
 
