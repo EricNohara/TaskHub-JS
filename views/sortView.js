@@ -46,6 +46,7 @@ const sortHandler = function (e) {
   renderList();
 };
 
+//handle when an element is removed from the task array, first remove it from the correct sorted/unsorted array
 const removeFromSort = function (e) {
   let removed = false;
 
@@ -58,11 +59,13 @@ const removeFromSort = function (e) {
       )
     ];
 
+  //handle removal from correct array
   importantTasks.forEach((el) => {
     if (el === removedElement) importantTasks = removeEl(el, importantTasks);
     removed = true;
   });
 
+  //gaurd clause for efficiency, if element is already removed, skip
   if (!removed)
     nonImportantTasks.forEach((el) => {
       if (el === removedElement)
