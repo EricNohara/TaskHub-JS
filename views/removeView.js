@@ -5,6 +5,7 @@ import {
   reassignChecked,
 } from "./checkedView.js";
 import { taskArr, removeFromTaskArr } from "./taskArrView.js";
+import { removeFromSort } from "./sortView.js";
 
 let removeBtns;
 
@@ -13,9 +14,14 @@ const getRemoveBtns = function () {
 };
 
 const removedHandler = function (e) {
+  console.log("removing...");
   //remove task from the checked array and task array
+  removeFromSort(e);
   removeFromCheckedArr(e);
   removeFromTaskArr(e);
+
+  console.log("taskArr: ", taskArr);
+  console.log("checkedArr: ", checked);
 
   //if the list is empty, remove the important button
   if (taskArr.length === 0)

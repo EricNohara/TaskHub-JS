@@ -6,12 +6,13 @@ import { refreshCheckedArr } from "./checkedView.js";
 let importantTasks = [];
 let nonImportantTasks = [];
 
-const sortTasks = function () {
-  const removeEl = function (el, arr) {
-    const index = arr.indexOf(el);
-    return [...arr.slice(0, index), ...arr.slice(index + 1, arr.length)];
-  };
+//helper function to remove elements from the arrays
+const removeEl = function (el, arr) {
+  const index = arr.indexOf(el);
+  return [...arr.slice(0, index), ...arr.slice(index + 1, arr.length)];
+};
 
+const sortTasks = function () {
   //map tasks marked as important to the importantTasks array
   taskArr.forEach((el) => {
     if (el.important) {
@@ -45,4 +46,29 @@ const sortHandler = function (e) {
   renderList();
 };
 
-export { sortHandler };
+const removeFromSort = function (e) {
+  let removed = false;
+
+  //select the correct element from task array based on the element that was clicked
+  const removedElement =
+    taskArr[
+      taskArr.findIndex(
+        (el) =>
+          el.itemNum === +e.target.closest(".list-item").classList[1].slice(-1)
+      )
+    ];
+
+  importantTasks.forEach((el) => {
+    if (el === removedElement) importantTasks = removeEl(el, importantTasks);
+    removed = true;
+  });
+
+  if (!removed)
+    nonImportantTasks.forEach((el) => {
+      if (el === removedElement)
+        nonImportantTasks = removeEl(el, nonImportantTasks);
+      removed = true;
+    });
+};
+
+export { sortHandler, removeFromSort };
