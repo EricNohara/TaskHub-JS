@@ -93,10 +93,11 @@ button:active {
 .btn-sort-tasks:hover {
   background-color: #c6616d;
   color: white;
-  .sort-icon {
-    filter: invert(98%) sepia(0%) saturate(7460%) hue-rotate(75deg)
-      brightness(109%) contrast(101%);
-  }
+}
+
+.btn-sort-tasks:hover .sort-icon {
+  filter: invert(98%) sepia(0%) saturate(7460%) hue-rotate(75deg)
+    brightness(109%) contrast(101%);
 }
 
 .sort-icon {
@@ -342,13 +343,14 @@ input[type="text"]:hover {
 /* Toggleable classes */
 .required {
   color: rgb(196, 0, 0);
+}
 
-  #question1 {
-    border: 1px solid rgb(196, 0, 0);
-  }
-  #question1::placeholder {
-    color: rgb(196, 0, 0);
-  }
+.required #question1 {
+  border: 1px solid rgb(196, 0, 0);
+}
+
+.required #question1::placeholder {
+  color: rgb(196, 0, 0);
 }
 
 .hidden {

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/index.3a01df49.css">
+    <script src="/index.8cfc62b9.js" defer=""></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="list-container">
+        <div class="nav">
+          <h1 class="list-header">To Do List</h1>
+          <button class="btn-open-form">
+            <p>+</p>
+            Add Task
+          </button>
+          <button class="btn-sort-tasks">
+            <img class="sort-icon" src="/sort.0d26d2de.png" alt="Sort Tasks Button">
+            sort
+          </button>
+        </div>
+        <!-- LIST ITEMS -->
+        <ul class="list-elements">
+          <li class="start-msg list-item">Click + to add first task to list</li>
+          <!-- <li class="list-item">
+            <div class="task-info">
+                <input class="checkbox" type="checkbox" />
+                <p class="task">Laundry</p>
+                <p class="task-time">6:00</p>
+            </div>
+            <div class="task-actions">
+                <img class="star-icon" src="/imgs/star.png" alt="Favorited Icon" />
+                <button class="btn-remove-task">Remove</button>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="task-info">
+                <input class="checkbox" type="checkbox" checked />
+                <p class="task">Dishes</p>
+            </div>
+        </li> -->
+        </ul>
+      </div>
+
+      <button class="btn-important hidden">Mark important</button>
+
+      <div class="form-container hidden">
+        <h3 class="form-header">Enter Task to Add to List</h3>
+        <div class="exit"><button class="btn-exit">&#10005;</button></div>
+
+        <form action="" method="get" class="form-add-item">
+          <div class="question required-question">
+            <label class="question-description" for="question1">Enter task to add to list:
+            </label>
+            <input type="text" id="question1" placeholder="This field is required">
+          </div>
+          <div class="question">
+            <label class="question-description" for="question2">Specify time (<em>optional</em>):
+            </label>
+            <input type="time" id="question2">
+          </div>
+          <button class="btn-add">Add to List</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
