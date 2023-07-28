@@ -3,8 +3,15 @@ import { taskArr, sortTaskArr } from "./taskArrView.js";
 import { refreshCheckedArr } from "./checkedView.js";
 
 //global scope
+//important tasks
 let importantTasks = [];
+let importantTasksWithTime = [];
+let importantTasksNoTime = [];
+
+//nonimportant tasks
 let nonImportantTasks = [];
+let nonImportantTasksWithTime = [];
+let nonImportantTasksNoTime = [];
 
 //helper function to remove elements from the arrays
 const removeEl = function (el, arr) {
