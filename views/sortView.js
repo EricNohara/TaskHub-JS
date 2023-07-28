@@ -13,13 +13,15 @@ let nonImportantTasks = [];
 let nonImportantTasksWithTime = [];
 let nonImportantTasksNoTime = [];
 
-//helper function to remove elements from the arrays
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+//helper functions to remove elements from the arrays
 const removeEl = function (el, arr) {
   const index = arr.indexOf(el);
   return [...arr.slice(0, index), ...arr.slice(index + 1, arr.length)];
 };
 
-const sortTasks = function () {
+const sortImportant = function () {
   //map tasks marked as important to the importantTasks array
   taskArr.forEach((el) => {
     if (el.important) {
@@ -36,9 +38,88 @@ const sortTasks = function () {
       if (!nonImportantTasks.includes(el)) nonImportantTasks.push(el);
     }
   });
+};
+
+const sortImportantSubArrays = function () {
+  //handle sorting important tasks into timed and not timed
+  importantTasks.forEach((el) => {
+    if (el.time) {
+      //push the timed task to the correct array
+      if (!importantTasksWithTime.includes(el)) importantTasksWithTime.push(el);
+      //if task is timed but is in the not timed array, remove from not timed array
+      if (importantTasksNoTime.includes(el))
+        importantTasksNoTime = removeEl(el, importantTasksNoTime);
+      //if task is in important timed array, remove from the important timed array
+      if (nonImportantTasksWithTime.includes(el))
+        nonImportantTasksWithTime = removeEl(el, nonImportantTasksWithTime);
+    } else if (!el.time) {
+      //push the untimed task to the correct array
+      if (!importantTasksNoTime.includes(el)) importantTasksNoTime.push(el);
+      //if task is not timed but is in the not timed array, remove from not timed array
+      if (importantTasksWithTime.includes(el)) {
+        importantTasksWithTime = removeEl(el, importantTasksWithTime);
+      }
+      //if task is in not important timed array, remove from the not important timed array
+      if (nonImportantTasksNoTime.includes(el))
+        nonImportantTasksNoTime = removeEl(el, nonImportantTasksNoTime);
+    }
+  });
+};
+
+const sortNonImportantSubArrays = function () {
+  //handle sorting nonimportant tasks into timed and not timed
+  nonImportantTasks.forEach((el) => {
+    if (el.time) {
+      //push the timed task to the correct array
+      if (!nonImportantTasksWithTime.includes(el))
+        nonImportantTasksWithTime.push(el);
+      //if task is timed but is in the not timed array, remove from not timed array
+      if (nonImportantTasksNoTime.includes(el))
+        nonImportantTasksNoTime = removeEl(el, nonImportantTasksNoTime);
+      //if task is in important timed array, remove from the important timed array
+      if (importantTasksWithTime.includes(el))
+        importantTasksWithTime = removeEl(el, importantTasksWithTime);
+    } else if (!el.time) {
+      //push the untimed task to the correct array
+      if (!nonImportantTasksNoTime.includes(el))
+        nonImportantTasksNoTime.push(el);
+      //if task is not timed but is in the not timed array, remove from not timed array
+      if (nonImportantTasksWithTime.includes(el))
+        nonImportantTasksWithTime = removeEl(el, nonImportantTasksWithTime);
+      //if task is in important timed array, remove from the important timed array
+      if (importantTasksNoTime.includes(el))
+        importantTasksNoTime = removeEl(el, importantTasksNoTime);
+    }
+  });
+};
+
+const sortTimed = function (timedArr) {
+  return timedArr.sort((a, b) => {
+    const time1 = +a.time.split(":")[0] * 60 + +a.time.split(":")[1];
+    const time2 = +b.time.split(":")[0] * 60 + +b.time.split(":")[1];
+    return time1 - time2;
+  });
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+const sortTasks = function () {
+  //sort the task array into appropriate sub-arrays
+  sortImportant();
+  sortImportantSubArrays();
+  sortNonImportantSubArrays();
+
+  //sort the timed arrays
+  const sortedImportantTimed = sortTimed(importantTasksWithTime);
+  const sortedNonImportantTimed = sortTimed(nonImportantTasksWithTime);
 
   //generating the new taskArr
-  sortTaskArr([...importantTasks, ...nonImportantTasks]);
+  sortTaskArr([
+    ...sortedImportantTimed,
+    ...importantTasksNoTime,
+    ...sortedNonImportantTimed,
+    ...nonImportantTasksNoTime,
+  ]);
 };
 
 const sortHandler = function (e) {
