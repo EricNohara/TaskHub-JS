@@ -23,6 +23,10 @@ const removedHandler = function (e) {
   if (taskArr.length === 0)
     document.querySelector(".btn-important").classList.add("hidden");
 
+  //if checked array is empty, remove the important button
+  if (checked.length === 0)
+    document.querySelector(".btn-important").classList.add("hidden");
+
   //refresh and rerender the list
   renderList();
 

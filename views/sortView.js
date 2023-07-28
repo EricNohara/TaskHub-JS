@@ -1,6 +1,7 @@
 import { renderList } from "./formView.js";
 import { taskArr, sortTaskArr } from "./taskArrView.js";
 import { refreshCheckedArr } from "./checkedView.js";
+import { removedHandler } from "./removeView.js";
 
 //global scope
 //important tasks
@@ -137,6 +138,7 @@ const sortHandler = function (e) {
 //handle when an element is removed from the task array, first remove it from the correct sorted/unsorted array
 const removeFromSort = function (e) {
   let removed = false;
+  let removedTimed = false;
 
   //select the correct element from task array based on the element that was clicked
   const removedElement =
@@ -160,6 +162,37 @@ const removeFromSort = function (e) {
         nonImportantTasks = removeEl(el, nonImportantTasks);
       removed = true;
     });
+
+  //handling the timed arrays
+  importantTasksWithTime.forEach((el) => {
+    el === removedElement
+      ? (importantTasksWithTime = removeEl(el, importantTasksWithTime))
+      : importantTasksWithTime;
+    removedTimed = true;
+  });
+
+  if (!removedTimed)
+    importantTasksNoTime.forEach((el) => {
+      el === removedElement
+        ? (importantTasksNoTime = removeEl(el, importantTasksNoTime))
+        : importantTasksNoTime;
+      removedTimed = true;
+    });
+
+  if (!removedTimed)
+    nonImportantTasksWithTime.forEach((el) => {
+      el === removedElement
+        ? (nonImportantTasksWithTime = removeEl(el, nonImportantTasksWithTime))
+        : nonImportantTasksWithTime;
+      removedTimed = true;
+    });
+
+  if (!removedTimed)
+    nonImportantTasksNoTime.forEach((el) =>
+      el === removedElement
+        ? (nonImportantTasksNoTime = removeEl(el, nonImportantTasksNoTime))
+        : nonImportantTasksNoTime
+    );
 };
 
 export { sortHandler, removeFromSort };
