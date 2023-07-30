@@ -2,12 +2,11 @@
   "name": "to-do-list",
   "version": "1.0.0",
   "description": "Interactive to-do list application",
-  "main": "script.js",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html --dist-dir ./dist"
   },
-  "author": "",
+  "author": "Eric Nohara-LeClair",
   "license": "ISC",
   "dependencies": {
     "parcel": "^2.9.3"

@@ -730,13 +730,17 @@ parcelHelpers.export(exports, "createNewTask", ()=>createNewTask);
 parcelHelpers.export(exports, "sortTaskArr", ()=>sortTaskArr);
 let taskArr = [];
 const createNewTask = function(task, time) {
+    //formatting the task string to capitalize first letter of each word
+    const formattedTask = task.toLowerCase().split(" ").map((wrd)=>wrd[0].toUpperCase() + wrd.slice(1)).join(" ");
+    //creating the task object which will be pushed to the task array
     const taskInfo = {
-        task,
+        task: formattedTask,
         time,
         important: false,
         checked: false,
         itemNum: taskArr.length
     };
+    //add new task to the task array
     taskArr.push(taskInfo);
 };
 const removeFromTaskArr = function(e) {
@@ -874,6 +878,8 @@ const removedHandler = function(e) {
     (0, _taskArrViewJs.removeFromTaskArr)(e);
     //if the list is empty, remove the important button
     if ((0, _taskArrViewJs.taskArr).length === 0) document.querySelector(".btn-important").classList.add("hidden");
+    //if checked array is empty, remove the important button
+    if ((0, _checkedViewJs.checked).length === 0) document.querySelector(".btn-important").classList.add("hidden");
     //refresh and rerender the list
     (0, _formViewJs.renderList)();
     //reassign needed values in the checked array
@@ -888,6 +894,7 @@ parcelHelpers.export(exports, "removeFromSort", ()=>removeFromSort);
 var _formViewJs = require("./formView.js");
 var _taskArrViewJs = require("./taskArrView.js");
 var _checkedViewJs = require("./checkedView.js");
+var _removeViewJs = require("./removeView.js");
 //global scope
 //important tasks
 let importantTasks = [];
@@ -996,6 +1003,7 @@ const sortHandler = function(e) {
 //handle when an element is removed from the task array, first remove it from the correct sorted/unsorted array
 const removeFromSort = function(e) {
     let removed = false;
+    let removedTimed = false;
     //select the correct element from task array based on the element that was clicked
     const removedElement = (0, _taskArrViewJs.taskArr)[(0, _taskArrViewJs.taskArr).findIndex((el)=>el.itemNum === +e.target.closest(".list-item").classList[1].slice(-1))];
     //handle removal from correct array
@@ -1008,9 +1016,23 @@ const removeFromSort = function(e) {
         if (el === removedElement) nonImportantTasks = removeEl(el, nonImportantTasks);
         removed = true;
     });
+    //handling the timed arrays
+    importantTasksWithTime.forEach((el)=>{
+        el === removedElement ? importantTasksWithTime = removeEl(el, importantTasksWithTime) : importantTasksWithTime;
+        removedTimed = true;
+    });
+    if (!removedTimed) importantTasksNoTime.forEach((el)=>{
+        el === removedElement ? importantTasksNoTime = removeEl(el, importantTasksNoTime) : importantTasksNoTime;
+        removedTimed = true;
+    });
+    if (!removedTimed) nonImportantTasksWithTime.forEach((el)=>{
+        el === removedElement ? nonImportantTasksWithTime = removeEl(el, nonImportantTasksWithTime) : nonImportantTasksWithTime;
+        removedTimed = true;
+    });
+    if (!removedTimed) nonImportantTasksNoTime.forEach((el)=>el === removedElement ? nonImportantTasksNoTime = removeEl(el, nonImportantTasksNoTime) : nonImportantTasksNoTime);
 };
 
-},{"./formView.js":"ckTVq","./taskArrView.js":"elewV","./checkedView.js":"fc2We","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fqU95":[function(require,module,exports) {
+},{"./formView.js":"ckTVq","./taskArrView.js":"elewV","./checkedView.js":"fc2We","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./removeView.js":"jsNEI"}],"fqU95":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "importantBtnHandler", ()=>importantBtnHandler);
