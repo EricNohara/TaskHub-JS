@@ -714,7 +714,7 @@ const generateMarkup = function(listEl) {
             </p>
         </div>
         <div class="task-actions">
-            <img class="star-icon ${!listEl.important ? "hidden" : ""}" src="/imgs/star.png" alt="Favorited Icon" />
+            <img class="star-icon ${!listEl.important ? "hidden" : ""}" src="https://www.svgrepo.com/show/13695/star.svg" alt="Favorited Icon" />
             <button class="btn-remove-task ${!listEl.checked ? "hidden" : ""}">Remove</button>
         </div>
     </li>
@@ -742,6 +742,11 @@ const createNewTask = function(task, time) {
     };
     //add new task to the task array
     taskArr.push(taskInfo);
+//testing
+// const path = require("path");
+// let relative = "imgs/star.png";
+// let absolute = path.resolve(relative);
+// console.log(absolute);
 };
 const removeFromTaskArr = function(e) {
     const index = +taskArr.findIndex((el)=>el.itemNum === +e.target.closest(".list-item").classList[1].slice(-1));

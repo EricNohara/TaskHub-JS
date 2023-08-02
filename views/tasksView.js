@@ -52,7 +52,7 @@ const generateMarkup = function (listEl) {
         <div class="task-actions">
             <img class="star-icon ${
               !listEl.important ? "hidden" : ""
-            }" src="/imgs/star.png" alt="Favorited Icon" />
+            }" src="https://www.svgrepo.com/show/13695/star.svg" alt="Favorited Icon" />
             <button class="btn-remove-task ${
               !listEl.checked ? "hidden" : ""
             }">Remove</button>
