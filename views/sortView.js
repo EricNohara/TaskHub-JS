@@ -151,40 +151,43 @@ const removeFromSort = function (e) {
 
   //handle removal from correct array
   importantTasks.forEach((el) => {
-    if (el === removedElement) importantTasks = removeEl(el, importantTasks);
-    removed = true;
+    if (el === removedElement) {
+      importantTasks = removeEl(el, importantTasks);
+      removed = true;
+    }
   });
 
   //gaurd clause for efficiency, if element is already removed, skip
   if (!removed)
     nonImportantTasks.forEach((el) => {
-      if (el === removedElement)
+      if (el === removedElement) {
         nonImportantTasks = removeEl(el, nonImportantTasks);
-      removed = true;
+        removed = true;
+      }
     });
 
   //handling the timed arrays
   importantTasksWithTime.forEach((el) => {
-    el === removedElement
-      ? (importantTasksWithTime = removeEl(el, importantTasksWithTime))
-      : importantTasksWithTime;
-    removedTimed = true;
+    if (el === removedElement) {
+      importantTasksWithTime = removeEl(el, importantTasksWithTime);
+      removedTimed = true;
+    }
   });
 
   if (!removedTimed)
     importantTasksNoTime.forEach((el) => {
-      el === removedElement
-        ? (importantTasksNoTime = removeEl(el, importantTasksNoTime))
-        : importantTasksNoTime;
-      removedTimed = true;
+      if (el === removedElement) {
+        importantTasksNoTime = removeEl(el, importantTasksNoTime);
+        removedTimed = true;
+      }
     });
 
   if (!removedTimed)
     nonImportantTasksWithTime.forEach((el) => {
-      el === removedElement
-        ? (nonImportantTasksWithTime = removeEl(el, nonImportantTasksWithTime))
-        : nonImportantTasksWithTime;
-      removedTimed = true;
+      if (el === removedElement) {
+        nonImportantTasksWithTime = removeEl(el, nonImportantTasksWithTime);
+        removedTimed = true;
+      }
     });
 
   if (!removedTimed)
