@@ -1,5 +1,9 @@
 import { addItemForm, submitHandler } from "./views/formView.js";
-import { importantBtnHandler } from "./views/importantView.js";
+import {
+  importantBtnHandler,
+  removeImportantButton,
+  renderImportantButton,
+} from "./views/importantView.js";
 import { sortHandler } from "./views/sortView.js";
 import { renderLocalStorage } from "./views/renderLocalStorage.js";
 
@@ -10,6 +14,7 @@ const exitBtn = document.querySelector(".btn-exit");
 const openFormBtn = document.querySelector(".btn-open-form");
 const importantBtn = document.querySelector(".btn-important");
 const sortBtn = document.querySelector(".btn-sort-tasks");
+const exportBtn = document.querySelector(".btn-export");
 
 //Function to handle adding and removing hidden class to elements
 const toggleHidden = function (e) {
@@ -29,8 +34,6 @@ const toggleHidden = function (e) {
 };
 
 const init = function () {
-  let importantBtnToggled = false;
-
   //load list items from local storage, else load the welcome message
   if (localStorage.getItem("taskArrStorage")) renderLocalStorage();
   else
@@ -43,16 +46,12 @@ const init = function () {
 
   openFormBtn.addEventListener("click", (e) => {
     toggleHidden(e);
-    if (!(importantBtn.classList[1] === "hidden")) {
-      importantBtnToggled = true;
-      importantBtn.classList.add("hidden");
-    }
+    renderImportantButton();
   });
 
   exitBtn.addEventListener("click", (e) => {
     toggleHidden(e);
-    if (importantBtnToggled) importantBtn.classList.remove("hidden");
-    importantBtnToggled = false;
+    removeImportantButton();
   });
 
   //event handler listening for form submission
@@ -63,6 +62,9 @@ const init = function () {
 
   //event handler for the sort button
   sortBtn.addEventListener("click", sortHandler);
+
+  //tesitnf
+  exportBtn.addEventListener("click", () => localStorage.clear());
 };
 
 init();

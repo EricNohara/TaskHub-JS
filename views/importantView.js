@@ -2,6 +2,10 @@ import { checked } from "./checkedView.js";
 import { renderList } from "./formView.js";
 import { taskArr } from "./taskArrView.js";
 
+//GLOBAL SCOPE
+const importantBtn = document.querySelector(".btn-important");
+let importantBtnToggled = false;
+
 const addImportantAttribute = function (el) {
   //selecting index of the task in the taskArr
   const elementIndex = +el.slice(-1);
@@ -24,4 +28,16 @@ const importantBtnHandler = function () {
   renderList();
 };
 
-export { importantBtnHandler };
+const renderImportantButton = function () {
+  if (!(importantBtn.classList[1] === "hidden")) {
+    importantBtnToggled = true;
+    importantBtn.classList.add("hidden");
+  }
+};
+
+const removeImportantButton = function () {
+  if (importantBtnToggled) importantBtn.classList.remove("hidden");
+  importantBtnToggled = false;
+};
+
+export { importantBtnHandler, renderImportantButton, removeImportantButton };
