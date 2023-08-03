@@ -19,6 +19,7 @@ button {
   cursor: pointer;
   box-shadow: 0 5px #999;
   outline: none;
+  transition-duration: 0.4s;
 }
 
 button:active {
@@ -58,7 +59,6 @@ button:active {
   color: #4caf50;
   border-radius: 8px;
   border: 4px solid #4caf50;
-  transition-duration: 0.4s;
 }
 
 .btn-open-form:hover {
@@ -87,7 +87,6 @@ button:active {
   color: #c6616d;
   border-radius: 8px;
   border: 4px solid #c6616d;
-  transition-duration: 0.4s;
 }
 
 .btn-sort-tasks:hover {
@@ -186,7 +185,6 @@ input[type="checkbox"] {
   background-color: white;
   text-transform: uppercase;
   font-weight: 600;
-  transition-duration: 0.4s;
 }
 
 .btn-remove-task:hover {
@@ -219,12 +217,39 @@ input[type="checkbox"] {
   padding: 20px 10px;
   right: 20px;
   top: 87%;
-  transition-duration: 0.4s;
 }
 
 .btn-important:hover {
   color: white;
   background-color: rgb(237, 158, 0);
+}
+
+.btn-export .img-export {
+  height: 50px;
+}
+
+.btn-export {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 3px solid #53282d;
+  background-color: #fff6f5;
+}
+
+.img-export {
+  filter: invert(18%) sepia(12%) saturate(2565%) hue-rotate(304deg)
+    brightness(89%) contrast(91%);
+}
+
+.btn-export:hover .img-export {
+  filter: invert(94%) sepia(2%) saturate(1409%) hue-rotate(314deg)
+    brightness(94%) contrast(126%);
+}
+
+.btn-export:hover {
+  background-color: #53282d;
 }
 
 /* FORMATTING THE FORM */
@@ -273,7 +298,6 @@ input[type="checkbox"] {
   box-shadow: none;
   background-color: white;
   color: red;
-  transition-duration: 0.4s;
 }
 
 .btn-exit:hover {
@@ -292,7 +316,6 @@ input[type="checkbox"] {
   font-weight: bold;
   background-color: #ffffff;
   color: #04aa6d;
-  transition-duration: 0.4s;
 }
 
 .btn-add:hover {
