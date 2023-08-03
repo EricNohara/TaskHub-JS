@@ -1,7 +1,6 @@
 import { renderList } from "./formView.js";
-import { taskArr, sortTaskArr } from "./taskArrView.js";
+import { taskArr, changeTaskArr } from "./taskArrView.js";
 import { refreshCheckedArr } from "./checkedView.js";
-import { removedHandler } from "./removeView.js";
 
 //global scope
 //important tasks
@@ -115,7 +114,7 @@ const sortTasks = function () {
   const sortedNonImportantTimed = sortTimed(nonImportantTasksWithTime);
 
   //generating the new taskArr
-  sortTaskArr([
+  changeTaskArr([
     ...sortedImportantTimed,
     ...importantTasksNoTime,
     ...sortedNonImportantTimed,

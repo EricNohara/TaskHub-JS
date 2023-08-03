@@ -30,6 +30,10 @@ const renderList = function () {
 
   //add event listener for each remove button
   removeBtns.forEach((btn) => btn.addEventListener("click", removedHandler));
+
+  //adding the current task array to local storage
+  localStorage.clear();
+  localStorage.setItem("taskArrStorage", JSON.stringify(taskArr));
 };
 
 //function to handle submission of the form
@@ -47,7 +51,6 @@ const submitHandler = function (e) {
   }
 
   //creating the task object
-  //each task is an object containing the task, time, important and checked status, and item number
   createNewTask(task, time);
 
   //remove the required class after valid form submission

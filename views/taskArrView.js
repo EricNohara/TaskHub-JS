@@ -19,12 +19,6 @@ const createNewTask = function (task, time) {
 
   //add new task to the task array
   taskArr.push(taskInfo);
-
-  //testing
-  // const path = require("path");
-  // let relative = "imgs/star.png";
-  // let absolute = path.resolve(relative);
-  // console.log(absolute);
 };
 
 const removeFromTaskArr = function (e) {
@@ -45,8 +39,8 @@ const removeFromTaskArr = function (e) {
   ];
 };
 
-const sortTaskArr = function (arr) {
+const changeTaskArr = function (arr) {
   taskArr = arr;
 };
 
-export { taskArr, removeFromTaskArr, createNewTask, sortTaskArr };
+export { taskArr, removeFromTaskArr, createNewTask, changeTaskArr };

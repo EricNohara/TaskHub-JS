@@ -1,3 +1,4 @@
+import { renderList } from "./formView.js";
 import { taskArr } from "./taskArrView.js";
 
 //declare global scope
@@ -56,9 +57,13 @@ const checkedHandler = function (e) {
     //unhide the important button
     if (checked.length === 0)
       document.querySelector(".btn-important").classList.add("hidden");
+    //add information to local storage
   }
   if (checked.length !== 0)
     document.querySelector(".btn-important").classList.remove("hidden");
+
+  //rerender the list
+  renderList();
 };
 
 const clearCheckedArr = function () {

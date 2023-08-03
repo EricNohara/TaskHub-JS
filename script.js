@@ -1,7 +1,7 @@
 import { addItemForm, submitHandler } from "./views/formView.js";
-import { checkboxes, checkedHandler } from "./views/checkedView.js";
 import { importantBtnHandler } from "./views/importantView.js";
 import { sortHandler } from "./views/sortView.js";
+import { renderLocalStorage } from "./views/renderLocalStorage.js";
 
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");
@@ -29,6 +29,9 @@ const toggleHidden = function (e) {
 
 const init = function () {
   let importantBtnToggled = false;
+
+  // console.log(localStorage.getItem("taskArr"));
+  if (localStorage.getItem("taskArrStorage")) renderLocalStorage();
 
   openFormBtn.addEventListener("click", (e) => {
     toggleHidden(e);
