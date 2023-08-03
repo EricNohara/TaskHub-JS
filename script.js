@@ -5,6 +5,7 @@ import { renderLocalStorage } from "./views/renderLocalStorage.js";
 
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");
+const listElements = document.querySelector(".list-elements");
 const exitBtn = document.querySelector(".btn-exit");
 const openFormBtn = document.querySelector(".btn-open-form");
 const importantBtn = document.querySelector(".btn-important");
@@ -30,8 +31,15 @@ const toggleHidden = function (e) {
 const init = function () {
   let importantBtnToggled = false;
 
-  // console.log(localStorage.getItem("taskArr"));
+  //load list items from local storage, else load the welcome message
   if (localStorage.getItem("taskArrStorage")) renderLocalStorage();
+  else
+    listElements.insertAdjacentHTML(
+      "afterbegin",
+      `<li class="start-msg list-item">
+  Click + ADD TASK to add new task to list
+</li>`
+    );
 
   openFormBtn.addEventListener("click", (e) => {
     toggleHidden(e);
