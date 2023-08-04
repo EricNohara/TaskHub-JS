@@ -1,45 +1,47 @@
-import { checked } from "./checkedView.js";
 import { renderList } from "./formView.js";
 import { taskArr } from "./taskArrView.js";
 
 //GLOBAL SCOPE
-const importantBtn = document.querySelector(".btn-important");
-let importantBtnToggled = false;
+let importantBtns = [];
 
 const addImportantAttribute = function (el) {
-  //selecting index of the task in the taskArr
-  const elementIndex = +el.slice(-1);
-  const index = taskArr.findIndex(
-    (element) => element.itemNum === elementIndex
-  );
-
   //reassigning the important field for the currently selected task
-  if (!taskArr[index].important) taskArr[index].important = true;
-  else taskArr[index].important = false;
+  if (!el.important) el.important = true;
+  else el.important = false;
 };
 
-const importantBtnHandler = function () {
-  //adding the important attribute to all tasks currently checked
-  checked.forEach((el) => {
-    addImportantAttribute(el);
-  });
+///////////////////////////////////////////////
 
-  //rerender the list with updated important field values
+const getImportantBtns = function () {
+  importantBtns = [...document.querySelectorAll(".important-star-btn")];
+};
+
+const importantHandler = function (e) {
+  const elementIndex = +e.target.closest(".list-item").classList[1].slice(-1);
+  const index = taskArr.findIndex((el) => el.itemNum === elementIndex);
+
+  if (!taskArr[index].important) {
+    //add the important attribute to the element
+    addImportantAttribute(taskArr[index]);
+
+    //toggle the correct icons
+    e.target.closest(".unimportant").classList.add("hidden");
+    e.target
+      .closest(".task-actions")
+      .querySelector(".important")
+      .classList.remove("hidden");
+  } else if (taskArr[index].important) {
+    //toggle the imporant attribute to the element
+    addImportantAttribute(taskArr[index]);
+    e.target.closest(".important").classList.add("hidden");
+    e.target
+      .closest(".task-actions")
+      .querySelector(".unimportant")
+      .classList.remove("hidden");
+  }
+
+  //rerender the list
   renderList();
 };
 
-const removeImportantButton = function () {
-  if (!(importantBtn.classList[1] === "hidden")) {
-    importantBtnToggled = true;
-    importantBtn.classList.add("hidden");
-  }
-};
-
-const renderImportantButton = function () {
-  if (importantBtnToggled) {
-    importantBtn.classList.remove("hidden");
-    importantBtnToggled = false;
-  }
-};
-
-export { importantBtnHandler, renderImportantButton, removeImportantButton };
+export { getImportantBtns, importantBtns, importantHandler };

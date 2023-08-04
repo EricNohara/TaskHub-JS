@@ -1,10 +1,6 @@
 import { renderList } from "./formView.js";
-import {
-  removeFromCheckedArr,
-  checked,
-  reassignChecked,
-} from "./checkedView.js";
-import { taskArr, removeFromTaskArr } from "./taskArrView.js";
+import { removeFromCheckedArr, reassignChecked } from "./checkedView.js";
+import { removeFromTaskArr } from "./taskArrView.js";
 import { removeFromSort } from "./sortView.js";
 
 let removeBtns;
@@ -18,14 +14,6 @@ const removedHandler = function (e) {
   removeFromSort(e);
   removeFromCheckedArr(e);
   removeFromTaskArr(e);
-
-  //if the list is empty, remove the important button
-  if (taskArr.length === 0)
-    document.querySelector(".btn-important").classList.add("hidden");
-
-  //if checked array is empty, remove the important button
-  if (checked.length === 0)
-    document.querySelector(".btn-important").classList.add("hidden");
 
   //refresh and rerender the list
   renderList();

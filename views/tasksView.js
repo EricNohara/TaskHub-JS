@@ -50,9 +50,20 @@ const generateMarkup = function (listEl) {
             </p>
         </div>
         <div class="task-actions">
-            <img class="star-icon ${
+            <button class="important-star-btn unimportant ${
+              !listEl.checked || (listEl.checked && listEl.important)
+                ? "hidden"
+                : ""
+            }">
+              <img class="unclicked-star-icon" src="https://freeiconshop.com/wp-content/uploads/edd/star-curved-outline.png
+              " alt="UnFavorited Icon" />
+            </button>
+            <button class="important-star-btn important ${
               !listEl.important ? "hidden" : ""
-            }" src="https://www.svgrepo.com/show/13695/star.svg" alt="Favorited Icon" />
+            }">
+              <img class="star-icon" src="https://www.svgrepo.com/show/13695/star.svg
+              " alt="Favorited Icon" />
+            </button>
             <div class="removed">
               <button class="btn-remove-task ${
                 !listEl.checked ? "hidden" : ""
@@ -62,5 +73,4 @@ const generateMarkup = function (listEl) {
     </li>
   `;
 };
-
 export { renderTasks, refreshTasks };

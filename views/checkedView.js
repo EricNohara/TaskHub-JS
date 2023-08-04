@@ -54,13 +54,7 @@ const checkedHandler = function (e) {
   if (!e.target.checked) {
     removeFromCheckedArr(e);
     taskArr[index].checked = false;
-    //unhide the important button
-    if (checked.length === 0)
-      document.querySelector(".btn-important").classList.add("hidden");
-    //add information to local storage
   }
-  if (checked.length !== 0)
-    document.querySelector(".btn-important").classList.remove("hidden");
 
   //rerender the list
   renderList();

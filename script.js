@@ -1,9 +1,4 @@
 import { addItemForm, submitHandler } from "./views/formView.js";
-import {
-  importantBtnHandler,
-  removeImportantButton,
-  renderImportantButton,
-} from "./views/importantView.js";
 import { sortHandler } from "./views/sortView.js";
 import { renderLocalStorage } from "./views/renderLocalStorage.js";
 import {
@@ -18,7 +13,6 @@ const listContainer = document.querySelector(".list-container");
 const listElements = document.querySelector(".list-elements");
 const exitBtn = document.querySelector(".btn-exit");
 const openFormBtn = document.querySelector(".btn-open-form");
-const importantBtn = document.querySelector(".btn-important");
 const sortBtn = document.querySelector(".btn-sort-tasks");
 const exportBtn = document.querySelector(".btn-export");
 const clearBtn = document.querySelector(".btn-clear");
@@ -53,13 +47,11 @@ const init = function () {
 
   openFormBtn.addEventListener("click", (e) => {
     toggleHidden(e);
-    removeImportantButton();
     removeExportBtn();
   });
 
   exitBtn.addEventListener("click", (e) => {
     toggleHidden(e);
-    renderImportantButton();
     renderExportBtn();
   });
 
@@ -68,9 +60,6 @@ const init = function () {
 
   //event handler listening for form submission
   addItemForm.addEventListener("submit", submitHandler);
-
-  //event handler for the important button
-  importantBtn.addEventListener("click", importantBtnHandler);
 
   //event handler for the sort button
   sortBtn.addEventListener("click", sortHandler);

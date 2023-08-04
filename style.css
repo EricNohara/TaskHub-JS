@@ -205,8 +205,25 @@ input[type="checkbox"] {
   margin-right: 8px;
 }
 
-.star-icon {
+.star-icon,
+.unclicked-star-icon {
   height: 24px;
+}
+
+.unclicked-star-icon {
+  filter: invert(69%) sepia(5%) saturate(150%) hue-rotate(314deg)
+    brightness(90%) contrast(82%);
+}
+
+.important-star-btn {
+  border: none;
+  box-shadow: none;
+  background-color: inherit;
+}
+
+.important-star-btn:active {
+  box-shadow: none;
+  transform: translateY(2px);
 }
 
 .btn-remove-task {
@@ -225,6 +242,11 @@ input[type="checkbox"] {
 .btn-remove-task:hover {
   color: white;
   background-color: rgb(196, 0, 0);
+}
+
+.btn-remove-task:active {
+  box-shadow: none;
+  transform: translateY(2px);
 }
 
 .start-msg {
