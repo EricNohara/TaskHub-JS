@@ -6,7 +6,11 @@ import {
 } from "./views/importantView.js";
 import { sortHandler } from "./views/sortView.js";
 import { renderLocalStorage } from "./views/renderLocalStorage.js";
-import { removeExportBtn, renderExportBtn } from "./views/exportView.js";
+import {
+  generatePDF,
+  removeExportBtn,
+  renderExportBtn,
+} from "./views/exportView.js";
 
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");
@@ -67,7 +71,7 @@ const init = function () {
   sortBtn.addEventListener("click", sortHandler);
 
   //tesitnf
-  exportBtn.addEventListener("click", () => localStorage.clear());
+  exportBtn.addEventListener("click", generatePDF);
 };
 
 init();

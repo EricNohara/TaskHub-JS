@@ -575,15 +575,18 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"6rimH":[function(require,module,exports) {
 var _formViewJs = require("./views/formView.js");
-var _checkedViewJs = require("./views/checkedView.js");
 var _importantViewJs = require("./views/importantView.js");
 var _sortViewJs = require("./views/sortView.js");
+var _renderLocalStorageJs = require("./views/renderLocalStorage.js");
+var _exportViewJs = require("./views/exportView.js");
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");
+const listElements = document.querySelector(".list-elements");
 const exitBtn = document.querySelector(".btn-exit");
 const openFormBtn = document.querySelector(".btn-open-form");
 const importantBtn = document.querySelector(".btn-important");
 const sortBtn = document.querySelector(".btn-sort-tasks");
+const exportBtn = document.querySelector(".btn-export");
 //Function to handle adding and removing hidden class to elements
 const toggleHidden = function(e) {
     //toggle hidden class after the animation
@@ -600,18 +603,20 @@ const toggleHidden = function(e) {
     }
 };
 const init = function() {
-    let importantBtnToggled = false;
+    //load list items from local storage, else load the welcome message
+    if (localStorage.getItem("taskArrStorage")) (0, _renderLocalStorageJs.renderLocalStorage)();
+    else listElements.insertAdjacentHTML("afterbegin", `<li class="start-msg list-item">
+  Click + ADD TASK to add new task to list
+</li>`);
     openFormBtn.addEventListener("click", (e)=>{
         toggleHidden(e);
-        if (!(importantBtn.classList[1] === "hidden")) {
-            importantBtnToggled = true;
-            importantBtn.classList.add("hidden");
-        }
+        (0, _importantViewJs.renderImportantButton)();
+        (0, _exportViewJs.removeExportBtn)();
     });
     exitBtn.addEventListener("click", (e)=>{
         toggleHidden(e);
-        if (importantBtnToggled) importantBtn.classList.remove("hidden");
-        importantBtnToggled = false;
+        (0, _importantViewJs.removeImportantButton)();
+        (0, _exportViewJs.renderExportBtn)();
     });
     //event handler listening for form submission
     (0, _formViewJs.addItemForm).addEventListener("submit", (0, _formViewJs.submitHandler));
@@ -619,10 +624,12 @@ const init = function() {
     importantBtn.addEventListener("click", (0, _importantViewJs.importantBtnHandler));
     //event handler for the sort button
     sortBtn.addEventListener("click", (0, _sortViewJs.sortHandler));
+    //tesitnf
+    exportBtn.addEventListener("click", (0, _exportViewJs.generatePDF));
 };
 init();
 
-},{"./views/formView.js":"ckTVq","./views/importantView.js":"fqU95","./views/checkedView.js":"fc2We","./views/sortView.js":"aSWOM"}],"ckTVq":[function(require,module,exports) {
+},{"./views/formView.js":"ckTVq","./views/importantView.js":"fqU95","./views/sortView.js":"aSWOM","./views/renderLocalStorage.js":"bgng3","./views/exportView.js":"6Cl1e"}],"ckTVq":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "addItemForm", ()=>addItemForm);
@@ -654,6 +661,9 @@ const renderList = function() {
     (0, _checkedViewJs.checkboxes).forEach((box)=>box.addEventListener("change", (0, _checkedViewJs.checkedHandler)));
     //add event listener for each remove button
     (0, _removeViewJs.removeBtns).forEach((btn)=>btn.addEventListener("click", (0, _removeViewJs.removedHandler)));
+    //adding the current task array to local storage
+    localStorage.clear();
+    localStorage.setItem("taskArrStorage", JSON.stringify((0, _taskArrViewJs.taskArr)));
 };
 //function to handle submission of the form
 const submitHandler = function(e) {
@@ -667,7 +677,6 @@ const submitHandler = function(e) {
         return;
     }
     //creating the task object
-    //each task is an object containing the task, time, important and checked status, and item number
     (0, _taskArrViewJs.createNewTask)(task, time);
     //remove the required class after valid form submission
     requiredQuestion.classList.remove("required");
@@ -727,7 +736,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "taskArr", ()=>taskArr);
 parcelHelpers.export(exports, "removeFromTaskArr", ()=>removeFromTaskArr);
 parcelHelpers.export(exports, "createNewTask", ()=>createNewTask);
-parcelHelpers.export(exports, "sortTaskArr", ()=>sortTaskArr);
+parcelHelpers.export(exports, "changeTaskArr", ()=>changeTaskArr);
 let taskArr = [];
 const createNewTask = function(task, time) {
     //formatting the task string to capitalize first letter of each word
@@ -742,11 +751,6 @@ const createNewTask = function(task, time) {
     };
     //add new task to the task array
     taskArr.push(taskInfo);
-//testing
-// const path = require("path");
-// let relative = "imgs/star.png";
-// let absolute = path.resolve(relative);
-// console.log(absolute);
 };
 const removeFromTaskArr = function(e) {
     const index = +taskArr.findIndex((el)=>el.itemNum === +e.target.closest(".list-item").classList[1].slice(-1));
@@ -760,7 +764,7 @@ const removeFromTaskArr = function(e) {
         ...taskArr.slice(index + 1, taskArr.length)
     ];
 };
-const sortTaskArr = function(arr) {
+const changeTaskArr = function(arr) {
     taskArr = arr;
 };
 
@@ -804,6 +808,7 @@ parcelHelpers.export(exports, "getCheckBoxes", ()=>getCheckBoxes);
 parcelHelpers.export(exports, "removeFromCheckedArr", ()=>removeFromCheckedArr);
 parcelHelpers.export(exports, "reassignChecked", ()=>reassignChecked);
 parcelHelpers.export(exports, "refreshCheckedArr", ()=>refreshCheckedArr);
+var _formViewJs = require("./formView.js");
 var _taskArrViewJs = require("./taskArrView.js");
 //declare global scope
 let checkboxes;
@@ -847,8 +852,11 @@ const checkedHandler = function(e) {
         (0, _taskArrViewJs.taskArr)[index].checked = false;
         //unhide the important button
         if (checked.length === 0) document.querySelector(".btn-important").classList.add("hidden");
+    //add information to local storage
     }
     if (checked.length !== 0) document.querySelector(".btn-important").classList.remove("hidden");
+    //rerender the list
+    (0, _formViewJs.renderList)();
 };
 const clearCheckedArr = function() {
     checked.length = 0;
@@ -860,7 +868,7 @@ const refreshCheckedArr = function(arr) {
     });
 };
 
-},{"./taskArrView.js":"elewV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jsNEI":[function(require,module,exports) {
+},{"./taskArrView.js":"elewV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./formView.js":"ckTVq"}],"jsNEI":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "removeBtns", ()=>removeBtns);
@@ -899,7 +907,6 @@ parcelHelpers.export(exports, "removeFromSort", ()=>removeFromSort);
 var _formViewJs = require("./formView.js");
 var _taskArrViewJs = require("./taskArrView.js");
 var _checkedViewJs = require("./checkedView.js");
-var _removeViewJs = require("./removeView.js");
 //global scope
 //important tasks
 let importantTasks = [];
@@ -989,7 +996,7 @@ const sortTasks = function() {
     const sortedImportantTimed = sortTimed(importantTasksWithTime);
     const sortedNonImportantTimed = sortTimed(nonImportantTasksWithTime);
     //generating the new taskArr
-    (0, _taskArrViewJs.sortTaskArr)([
+    (0, _taskArrViewJs.changeTaskArr)([
         ...sortedImportantTimed,
         ...importantTasksNoTime,
         ...sortedNonImportantTimed,
@@ -1013,37 +1020,52 @@ const removeFromSort = function(e) {
     const removedElement = (0, _taskArrViewJs.taskArr)[(0, _taskArrViewJs.taskArr).findIndex((el)=>el.itemNum === +e.target.closest(".list-item").classList[1].slice(-1))];
     //handle removal from correct array
     importantTasks.forEach((el)=>{
-        if (el === removedElement) importantTasks = removeEl(el, importantTasks);
-        removed = true;
+        if (el === removedElement) {
+            importantTasks = removeEl(el, importantTasks);
+            removed = true;
+        }
     });
     //gaurd clause for efficiency, if element is already removed, skip
     if (!removed) nonImportantTasks.forEach((el)=>{
-        if (el === removedElement) nonImportantTasks = removeEl(el, nonImportantTasks);
-        removed = true;
+        if (el === removedElement) {
+            nonImportantTasks = removeEl(el, nonImportantTasks);
+            removed = true;
+        }
     });
     //handling the timed arrays
     importantTasksWithTime.forEach((el)=>{
-        el === removedElement ? importantTasksWithTime = removeEl(el, importantTasksWithTime) : importantTasksWithTime;
-        removedTimed = true;
+        if (el === removedElement) {
+            importantTasksWithTime = removeEl(el, importantTasksWithTime);
+            removedTimed = true;
+        }
     });
     if (!removedTimed) importantTasksNoTime.forEach((el)=>{
-        el === removedElement ? importantTasksNoTime = removeEl(el, importantTasksNoTime) : importantTasksNoTime;
-        removedTimed = true;
+        if (el === removedElement) {
+            importantTasksNoTime = removeEl(el, importantTasksNoTime);
+            removedTimed = true;
+        }
     });
     if (!removedTimed) nonImportantTasksWithTime.forEach((el)=>{
-        el === removedElement ? nonImportantTasksWithTime = removeEl(el, nonImportantTasksWithTime) : nonImportantTasksWithTime;
-        removedTimed = true;
+        if (el === removedElement) {
+            nonImportantTasksWithTime = removeEl(el, nonImportantTasksWithTime);
+            removedTimed = true;
+        }
     });
     if (!removedTimed) nonImportantTasksNoTime.forEach((el)=>el === removedElement ? nonImportantTasksNoTime = removeEl(el, nonImportantTasksNoTime) : nonImportantTasksNoTime);
 };
 
-},{"./formView.js":"ckTVq","./taskArrView.js":"elewV","./checkedView.js":"fc2We","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./removeView.js":"jsNEI"}],"fqU95":[function(require,module,exports) {
+},{"./formView.js":"ckTVq","./taskArrView.js":"elewV","./checkedView.js":"fc2We","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fqU95":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "importantBtnHandler", ()=>importantBtnHandler);
+parcelHelpers.export(exports, "renderImportantButton", ()=>renderImportantButton);
+parcelHelpers.export(exports, "removeImportantButton", ()=>removeImportantButton);
 var _checkedViewJs = require("./checkedView.js");
 var _formViewJs = require("./formView.js");
 var _taskArrViewJs = require("./taskArrView.js");
+//GLOBAL SCOPE
+const importantBtn = document.querySelector(".btn-important");
+let importantBtnToggled = false;
 const addImportantAttribute = function(el) {
     //selecting index of the task in the taskArr
     const elementIndex = +el.slice(-1);
@@ -1060,7 +1082,77 @@ const importantBtnHandler = function() {
     //rerender the list with updated important field values
     (0, _formViewJs.renderList)();
 };
+const renderImportantButton = function() {
+    if (!(importantBtn.classList[1] === "hidden")) {
+        importantBtnToggled = true;
+        importantBtn.classList.add("hidden");
+    }
+};
+const removeImportantButton = function() {
+    if (importantBtnToggled) importantBtn.classList.remove("hidden");
+    importantBtnToggled = false;
+};
 
-},{"./checkedView.js":"fc2We","./formView.js":"ckTVq","./taskArrView.js":"elewV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gAoaA","6rimH"], "6rimH", "parcelRequiree5c7")
+},{"./checkedView.js":"fc2We","./formView.js":"ckTVq","./taskArrView.js":"elewV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bgng3":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderLocalStorage", ()=>renderLocalStorage);
+var _taskArrViewJs = require("./taskArrView.js");
+var _formViewJs = require("./formView.js");
+var _checkedViewJs = require("./checkedView.js");
+const renderLocalStorage = function() {
+    //change the taskArr based on what is stored in local storage
+    (0, _taskArrViewJs.changeTaskArr)(JSON.parse(localStorage.getItem("taskArrStorage")));
+    //render the list
+    (0, _formViewJs.renderList)();
+    //refresh checkedArr
+    (0, _checkedViewJs.refreshCheckedArr)((0, _taskArrViewJs.taskArr));
+    //render the important button if needed
+    if ((0, _checkedViewJs.checked).length > 0) document.querySelector(".btn-important").classList.remove("hidden");
+};
+
+},{"./taskArrView.js":"elewV","./formView.js":"ckTVq","./checkedView.js":"fc2We","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6Cl1e":[function(require,module,exports) {
+//GLOBAL SCOPE
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderExportBtn", ()=>renderExportBtn);
+parcelHelpers.export(exports, "removeExportBtn", ()=>removeExportBtn);
+parcelHelpers.export(exports, "generatePDF", ()=>generatePDF);
+const exportBtn = document.querySelector(".btn-export");
+const renderExportBtn = function() {
+    exportBtn.classList.toggle("hidden-transition");
+    setTimeout(()=>exportBtn.classList.remove("hidden"), 300);
+};
+const removeExportBtn = function() {
+    exportBtn.classList.toggle("hidden-transition");
+    setTimeout(()=>exportBtn.classList.add("hidden"), 300);
+};
+const getOptions = (filename, element)=>{
+    let opt = {
+        margin: 0.5,
+        filename: filename + ".pdf",
+        image: {
+            type: "png",
+            quality: 0.7
+        },
+        html2canvas: {
+            scale: 2
+        },
+        jsPDF: {
+            unit: "mm",
+            width: element.offsetWidth,
+            height: element.offsetHeight,
+            orientation: "landscape"
+        }
+    };
+    return opt;
+};
+const generatePDF = function() {
+    const element = document.querySelector(".list-container");
+    const opt = getOptions("to_do_list", element);
+    html2pdf().set(opt).from(element).save();
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gAoaA","6rimH"], "6rimH", "parcelRequiree5c7")
 
 //# sourceMappingURL=index.8cfc62b9.js.map
