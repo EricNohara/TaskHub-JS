@@ -47,12 +47,12 @@ button:active {
 
 .btn-open-form {
   height: 50%;
-  width: 18%;
+  width: 15%;
   min-width: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
   background-color: #ffffff;
@@ -74,23 +74,29 @@ button:active {
 
 .btn-sort-tasks {
   height: 50%;
-  width: 18%;
+  width: 15%;
   min-width: 150px;
-  margin-right: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
   background-color: white;
-  color: #c6616d;
+  color: #54b4d3;
   border-radius: 8px;
-  border: 4px solid #c6616d;
+  border: 4px solid #54b4d3;
+}
+
+.sort-icon {
+  height: 38px;
+  margin-right: 8px;
+  filter: invert(70%) sepia(36%) saturate(633%) hue-rotate(152deg)
+    brightness(87%) contrast(90%);
 }
 
 .btn-sort-tasks:hover {
-  background-color: #c6616d;
+  background-color: #54b4d3;
   color: white;
 }
 
@@ -99,11 +105,38 @@ button:active {
     brightness(109%) contrast(101%);
 }
 
-.sort-icon {
-  height: 38px;
-  margin-right: 12px;
-  filter: invert(46%) sepia(57%) saturate(423%) hue-rotate(303deg)
-    brightness(91%) contrast(100%);
+.btn-clear {
+  height: 50%;
+  width: 15%;
+  min-width: 150px;
+  margin-right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: white;
+  color: #cb394a;
+  border-radius: 8px;
+  border: 4px solid #cb394a;
+}
+
+.clear-icon {
+  height: 30px;
+  margin-right: 8px;
+  filter: invert(45%) sepia(19%) saturate(6907%) hue-rotate(325deg)
+    brightness(78%) contrast(105%);
+}
+
+.btn-clear:hover {
+  background-color: #cb394a;
+  color: white;
+}
+
+.btn-clear:hover .clear-icon {
+  filter: invert(98%) sepia(0%) saturate(7460%) hue-rotate(75deg)
+    brightness(109%) contrast(101%);
 }
 
 /* FORMATTING THE LIST */
@@ -120,7 +153,7 @@ ul {
   grid-column: 1/2;
   width: 70vw;
   min-height: 90vh;
-  min-width: 625px;
+  min-width: 660px;
   background-color: #fff6f5;
 }
 
