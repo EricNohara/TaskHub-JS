@@ -206,19 +206,20 @@ input[type="checkbox"] {
 }
 
 .star-icon {
-  height: 28px;
+  height: 24px;
 }
 
 .btn-remove-task {
-  width: 94px;
-  height: 28px;
-  border-radius: 5px;
-  font-size: 16px;
-  border: 3px solid rgb(196, 0, 0);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  border: none;
   color: rgb(196, 0, 0);
-  background-color: white;
+  background-color: inherit;
   text-transform: uppercase;
   font-weight: 600;
+  box-shadow: none;
 }
 
 .btn-remove-task:hover {
