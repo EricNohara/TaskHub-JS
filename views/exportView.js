@@ -21,14 +21,14 @@ const getOptions = (filename, element) => {
       unit: "in",
       width: element.offsetWidth,
       height: element.offsetHeight,
-      orientation: "landscape",
+      orientation: "portrait",
     },
   };
   return opt;
 };
 
 const generatePDF = function () {
-  const element = document.querySelector(".list-container");
+  const element = document.querySelector(".list-elements");
   const opt = getOptions("to_do_list", element);
   html2pdf().set(opt).from(element).save();
 };
