@@ -43,4 +43,14 @@ const changeTaskArr = function (arr) {
   taskArr = arr;
 };
 
-export { taskArr, removeFromTaskArr, createNewTask, changeTaskArr };
+const resetTaskArr = function () {
+  taskArr.length = 0;
+};
+
+export {
+  taskArr,
+  removeFromTaskArr,
+  createNewTask,
+  changeTaskArr,
+  resetTaskArr,
+};

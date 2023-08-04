@@ -197,4 +197,16 @@ const removeFromSort = function (e) {
     );
 };
 
-export { sortHandler, removeFromSort };
+const resetSorted = function () {
+  //reset the global scope
+  importantTasks.length = 0;
+  importantTasksWithTime.length = 0;
+  importantTasksNoTime.length = 0;
+
+  //nonimportant tasks
+  nonImportantTasks.length = 0;
+  nonImportantTasksWithTime.length = 0;
+  nonImportantTasksNoTime.length = 0;
+};
+
+export { sortHandler, removeFromSort, resetSorted };

@@ -77,6 +77,11 @@ const refreshCheckedArr = function (arr) {
   });
 };
 
+const resetChecked = function () {
+  checked.length = 0;
+  if (checkboxes) checkboxes.length = 0;
+};
+
 export {
   checkboxes,
   checked,
@@ -85,4 +90,5 @@ export {
   removeFromCheckedArr,
   reassignChecked,
   refreshCheckedArr,
+  resetChecked,
 };

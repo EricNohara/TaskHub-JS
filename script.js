@@ -11,6 +11,7 @@ import {
   removeExportBtn,
   renderExportBtn,
 } from "./views/exportView.js";
+import { clearAllHandler } from "./views/clearAll.js";
 
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");
@@ -20,6 +21,7 @@ const openFormBtn = document.querySelector(".btn-open-form");
 const importantBtn = document.querySelector(".btn-important");
 const sortBtn = document.querySelector(".btn-sort-tasks");
 const exportBtn = document.querySelector(".btn-export");
+const clearBtn = document.querySelector(".btn-clear");
 
 //Function to handle adding and removing hidden class to elements
 const toggleHidden = function (e) {
@@ -51,15 +53,18 @@ const init = function () {
 
   openFormBtn.addEventListener("click", (e) => {
     toggleHidden(e);
-    renderImportantButton();
+    removeImportantButton();
     removeExportBtn();
   });
 
   exitBtn.addEventListener("click", (e) => {
     toggleHidden(e);
-    removeImportantButton();
+    renderImportantButton();
     renderExportBtn();
   });
+
+  //event handler listening for the clear all button
+  clearBtn.addEventListener("click", clearAllHandler);
 
   //event handler listening for form submission
   addItemForm.addEventListener("submit", submitHandler);

@@ -28,16 +28,18 @@ const importantBtnHandler = function () {
   renderList();
 };
 
-const renderImportantButton = function () {
+const removeImportantButton = function () {
   if (!(importantBtn.classList[1] === "hidden")) {
     importantBtnToggled = true;
     importantBtn.classList.add("hidden");
   }
 };
 
-const removeImportantButton = function () {
-  if (importantBtnToggled) importantBtn.classList.remove("hidden");
-  importantBtnToggled = false;
+const renderImportantButton = function () {
+  if (importantBtnToggled) {
+    importantBtn.classList.remove("hidden");
+    importantBtnToggled = false;
+  }
 };
 
 export { importantBtnHandler, renderImportantButton, removeImportantButton };
