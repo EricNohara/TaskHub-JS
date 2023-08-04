@@ -18,7 +18,7 @@ const getOptions = (filename, element) => {
     image: { type: "png", quality: 0.7 },
     html2canvas: { scale: 2 },
     jsPDF: {
-      unit: "mm",
+      unit: "in",
       width: element.offsetWidth,
       height: element.offsetHeight,
       orientation: "landscape",
