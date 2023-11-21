@@ -17,4 +17,4 @@ To-do list application written in vanilla JS, HTML, CSS, and in a MVC architecht
 
 ## Demo:
 
-![Untitled_ Nov 21, 2023 1_09 PM (1)](https://github.com/EricNohara/To-Do-List-JS/assets/123284198/3051a162-538c-491f-9629-7810533768e5)
+https://share.vidyard.com/watch/y248AqJGyHZhANgSgwRKvR?
