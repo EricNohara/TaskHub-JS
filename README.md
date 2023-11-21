@@ -14,3 +14,7 @@ To-do list application written in vanilla JS, HTML, CSS, and in a MVC architecht
 * Sort items in the list first by importance, then by time
 * Ability to toggle between sorted and unsorted states
 * Print the list to PDF format from the list generated on user's screen 
+
+## Demo:
+
+![Untitled_ Nov 21, 2023 1_09 PM (1)](https://github.com/EricNohara/To-Do-List-JS/assets/123284198/3051a162-538c-491f-9629-7810533768e5)
