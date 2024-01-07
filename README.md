@@ -1,4 +1,4 @@
-# To-Do-List-JS
+# TaskHub-JS
 
 ## Description:
 
