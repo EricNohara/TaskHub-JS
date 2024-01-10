@@ -11,6 +11,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/61739c9a9f.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <script type="module" src="script.js"></script>
@@ -66,13 +70,13 @@
         </ul>
       </div>
 
-      <button class="btn-export">
-        <img
-          class="img-export"
-          src="/imgs/file-export.png"
-          alt="Export Button"
-        />
-      </button>
+      <!-- <button class="btn-export">
+        <i class="fa-solid fa-file-export fa-3x"></i>
+      </button> -->
+
+      <div id="export-btn">
+        <i class="export-icon fa-solid fa-file-export fa-3x"></i>
+      </div>
 
       <div class="form-container hidden">
         <h3 class="form-header">Enter Task to Add to List</h3>
