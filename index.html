@@ -22,29 +22,18 @@
   <body>
     <div class="wrapper">
       <div class="list-container">
-        <div class="nav">
-          <h1 class="list-header">TaskHub</h1>
-          <button class="btn-open-form">
-            <p>+</p>
-            Add Task
+        <nav>
+          <h1 class="list-title">TaskHub</h1>
+          <button class="btn-open-form header-btn">
+            <i class="header-icon fa-solid fa-plus"></i>Add Task
           </button>
-          <button class="btn-sort-tasks">
-            <img
-              class="sort-icon"
-              src="/imgs/sort.png"
-              alt="Sort Tasks Button"
-            />
-            sort
+          <button class="btn-sort-tasks header-btn">
+            <i class="header-icon fa-solid fa-sort"></i>Sort
           </button>
-          <button class="btn-clear">
-            <img
-              class="clear-icon"
-              src="/imgs/trash-xmark.png"
-              alt="Clear all icon"
-            />
-            Clear All
+          <button class="btn-clear header-btn">
+            <i class="header-icon fa-solid fa-trash"></i>Clear All
           </button>
-        </div>
+        </nav>
         <!-- LIST ITEMS -->
         <ul class="list-elements">
           <!-- <li class="start-msg list-item">
@@ -69,10 +58,6 @@
         </li> -->
         </ul>
       </div>
-
-      <!-- <button class="btn-export">
-        <i class="fa-solid fa-file-export fa-3x"></i>
-      </button> -->
 
       <div id="export-btn">
         <i class="export-icon fa-solid fa-file-export fa-3x"></i>
