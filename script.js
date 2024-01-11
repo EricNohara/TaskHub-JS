@@ -5,6 +5,7 @@ import {
   generatePDF,
   removeExportBtn,
   renderExportBtn,
+  exportBtn,
 } from "./views/exportView.js";
 import { clearAllHandler } from "./views/clearAll.js";
 
@@ -14,7 +15,6 @@ const listElements = document.querySelector(".list-elements");
 const exitBtn = document.querySelector(".btn-exit");
 const openFormBtn = document.querySelector(".btn-open-form");
 const sortBtn = document.querySelector(".btn-sort-tasks");
-const exportBtn = document.querySelector(".btn-export");
 const clearBtn = document.querySelector(".btn-clear");
 
 //Function to handle adding and removing hidden class to elements

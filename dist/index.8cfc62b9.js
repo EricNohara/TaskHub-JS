@@ -575,18 +575,18 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"6rimH":[function(require,module,exports) {
 var _formViewJs = require("./views/formView.js");
-var _importantViewJs = require("./views/importantView.js");
 var _sortViewJs = require("./views/sortView.js");
 var _renderLocalStorageJs = require("./views/renderLocalStorage.js");
 var _exportViewJs = require("./views/exportView.js");
+var _clearAllJs = require("./views/clearAll.js");
 const formContainer = document.querySelector(".form-container");
 const listContainer = document.querySelector(".list-container");
 const listElements = document.querySelector(".list-elements");
 const exitBtn = document.querySelector(".btn-exit");
 const openFormBtn = document.querySelector(".btn-open-form");
-const importantBtn = document.querySelector(".btn-important");
 const sortBtn = document.querySelector(".btn-sort-tasks");
 const exportBtn = document.querySelector(".btn-export");
+const clearBtn = document.querySelector(".btn-clear");
 //Function to handle adding and removing hidden class to elements
 const toggleHidden = function(e) {
     //toggle hidden class after the animation
@@ -610,18 +610,16 @@ const init = function() {
 </li>`);
     openFormBtn.addEventListener("click", (e)=>{
         toggleHidden(e);
-        (0, _importantViewJs.renderImportantButton)();
         (0, _exportViewJs.removeExportBtn)();
     });
     exitBtn.addEventListener("click", (e)=>{
         toggleHidden(e);
-        (0, _importantViewJs.removeImportantButton)();
         (0, _exportViewJs.renderExportBtn)();
     });
+    //event handler listening for the clear all button
+    clearBtn.addEventListener("click", (0, _clearAllJs.clearAllHandler));
     //event handler listening for form submission
     (0, _formViewJs.addItemForm).addEventListener("submit", (0, _formViewJs.submitHandler));
-    //event handler for the important button
-    importantBtn.addEventListener("click", (0, _importantViewJs.importantBtnHandler));
     //event handler for the sort button
     sortBtn.addEventListener("click", (0, _sortViewJs.sortHandler));
     //tesitnf
@@ -629,7 +627,7 @@ const init = function() {
 };
 init();
 
-},{"./views/formView.js":"ckTVq","./views/importantView.js":"fqU95","./views/sortView.js":"aSWOM","./views/renderLocalStorage.js":"bgng3","./views/exportView.js":"6Cl1e"}],"ckTVq":[function(require,module,exports) {
+},{"./views/formView.js":"ckTVq","./views/sortView.js":"aSWOM","./views/renderLocalStorage.js":"bgng3","./views/exportView.js":"6Cl1e","./views/clearAll.js":"iq4de"}],"ckTVq":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "addItemForm", ()=>addItemForm);
@@ -639,6 +637,7 @@ var _tasksViewJs = require("./tasksView.js");
 var _checkedViewJs = require("./checkedView.js");
 var _removeViewJs = require("./removeView.js");
 var _taskArrViewJs = require("./taskArrView.js");
+var _importantViewJs = require("./importantView.js");
 const addItemForm = document.querySelector(".form-add-item");
 const question1 = document.getElementById("question1");
 const question2 = document.getElementById("question2");
@@ -657,10 +656,13 @@ const renderList = function() {
     //getting the checkboxes and remove buttons currently on the page
     (0, _checkedViewJs.getCheckBoxes)();
     (0, _removeViewJs.getRemoveBtns)();
+    (0, _importantViewJs.getImportantBtns)();
     //add event listener for each new list item and their checkboxes
     (0, _checkedViewJs.checkboxes).forEach((box)=>box.addEventListener("change", (0, _checkedViewJs.checkedHandler)));
     //add event listener for each remove button
     (0, _removeViewJs.removeBtns).forEach((btn)=>btn.addEventListener("click", (0, _removeViewJs.removedHandler)));
+    //add event listener for each important button
+    (0, _importantViewJs.importantBtns).forEach((btn)=>btn.addEventListener("click", (0, _importantViewJs.importantHandler)));
     //adding the current task array to local storage
     localStorage.clear();
     localStorage.setItem("taskArrStorage", JSON.stringify((0, _taskArrViewJs.taskArr)));
@@ -686,7 +688,7 @@ const submitHandler = function(e) {
     renderList();
 };
 
-},{"./tasksView.js":"1P8Pa","./checkedView.js":"fc2We","./removeView.js":"jsNEI","./taskArrView.js":"elewV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1P8Pa":[function(require,module,exports) {
+},{"./tasksView.js":"1P8Pa","./checkedView.js":"fc2We","./removeView.js":"jsNEI","./taskArrView.js":"elewV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./importantView.js":"fqU95"}],"1P8Pa":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "renderTasks", ()=>renderTasks);
@@ -723,8 +725,17 @@ const generateMarkup = function(listEl) {
             </p>
         </div>
         <div class="task-actions">
-            <img class="star-icon ${!listEl.important ? "hidden" : ""}" src="https://www.svgrepo.com/show/13695/star.svg" alt="Favorited Icon" />
-            <button class="btn-remove-task ${!listEl.checked ? "hidden" : ""}">Remove</button>
+            <button class="important-star-btn unimportant ${!listEl.checked || listEl.checked && listEl.important ? "hidden" : ""}">
+              <img class="unclicked-star-icon" src="https://freeiconshop.com/wp-content/uploads/edd/star-curved-outline.png
+              " alt="UnFavorited Icon" />
+            </button>
+            <button class="important-star-btn important ${!listEl.important ? "hidden" : ""}">
+              <img class="star-icon" src="https://www.svgrepo.com/show/13695/star.svg
+              " alt="Favorited Icon" />
+            </button>
+            <div class="removed">
+              <button class="btn-remove-task ${!listEl.checked ? "hidden" : ""}">&#10005;</button>
+            </div>
         </div>
     </li>
   `;
@@ -737,6 +748,7 @@ parcelHelpers.export(exports, "taskArr", ()=>taskArr);
 parcelHelpers.export(exports, "removeFromTaskArr", ()=>removeFromTaskArr);
 parcelHelpers.export(exports, "createNewTask", ()=>createNewTask);
 parcelHelpers.export(exports, "changeTaskArr", ()=>changeTaskArr);
+parcelHelpers.export(exports, "resetTaskArr", ()=>resetTaskArr);
 let taskArr = [];
 const createNewTask = function(task, time) {
     //formatting the task string to capitalize first letter of each word
@@ -766,6 +778,9 @@ const removeFromTaskArr = function(e) {
 };
 const changeTaskArr = function(arr) {
     taskArr = arr;
+};
+const resetTaskArr = function() {
+    taskArr.length = 0;
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
@@ -808,6 +823,7 @@ parcelHelpers.export(exports, "getCheckBoxes", ()=>getCheckBoxes);
 parcelHelpers.export(exports, "removeFromCheckedArr", ()=>removeFromCheckedArr);
 parcelHelpers.export(exports, "reassignChecked", ()=>reassignChecked);
 parcelHelpers.export(exports, "refreshCheckedArr", ()=>refreshCheckedArr);
+parcelHelpers.export(exports, "resetChecked", ()=>resetChecked);
 var _formViewJs = require("./formView.js");
 var _taskArrViewJs = require("./taskArrView.js");
 //declare global scope
@@ -850,11 +866,7 @@ const checkedHandler = function(e) {
     if (!e.target.checked) {
         removeFromCheckedArr(e);
         (0, _taskArrViewJs.taskArr)[index].checked = false;
-        //unhide the important button
-        if (checked.length === 0) document.querySelector(".btn-important").classList.add("hidden");
-    //add information to local storage
     }
-    if (checked.length !== 0) document.querySelector(".btn-important").classList.remove("hidden");
     //rerender the list
     (0, _formViewJs.renderList)();
 };
@@ -866,6 +878,10 @@ const refreshCheckedArr = function(arr) {
     arr.forEach((el)=>{
         if (el.checked) checked.push(`item${el.itemNum}`);
     });
+};
+const resetChecked = function() {
+    checked.length = 0;
+    if (checkboxes) checkboxes.length = 0;
 };
 
 },{"./taskArrView.js":"elewV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./formView.js":"ckTVq"}],"jsNEI":[function(require,module,exports) {
@@ -889,10 +905,6 @@ const removedHandler = function(e) {
     (0, _sortViewJs.removeFromSort)(e);
     (0, _checkedViewJs.removeFromCheckedArr)(e);
     (0, _taskArrViewJs.removeFromTaskArr)(e);
-    //if the list is empty, remove the important button
-    if ((0, _taskArrViewJs.taskArr).length === 0) document.querySelector(".btn-important").classList.add("hidden");
-    //if checked array is empty, remove the important button
-    if ((0, _checkedViewJs.checked).length === 0) document.querySelector(".btn-important").classList.add("hidden");
     //refresh and rerender the list
     (0, _formViewJs.renderList)();
     //reassign needed values in the checked array
@@ -904,6 +916,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "sortHandler", ()=>sortHandler);
 parcelHelpers.export(exports, "removeFromSort", ()=>removeFromSort);
+parcelHelpers.export(exports, "resetSorted", ()=>resetSorted);
 var _formViewJs = require("./formView.js");
 var _taskArrViewJs = require("./taskArrView.js");
 var _checkedViewJs = require("./checkedView.js");
@@ -1053,47 +1066,58 @@ const removeFromSort = function(e) {
     });
     if (!removedTimed) nonImportantTasksNoTime.forEach((el)=>el === removedElement ? nonImportantTasksNoTime = removeEl(el, nonImportantTasksNoTime) : nonImportantTasksNoTime);
 };
+const resetSorted = function() {
+    //reset the global scope
+    importantTasks.length = 0;
+    importantTasksWithTime.length = 0;
+    importantTasksNoTime.length = 0;
+    //nonimportant tasks
+    nonImportantTasks.length = 0;
+    nonImportantTasksWithTime.length = 0;
+    nonImportantTasksNoTime.length = 0;
+};
 
 },{"./formView.js":"ckTVq","./taskArrView.js":"elewV","./checkedView.js":"fc2We","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fqU95":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "importantBtnHandler", ()=>importantBtnHandler);
-parcelHelpers.export(exports, "renderImportantButton", ()=>renderImportantButton);
-parcelHelpers.export(exports, "removeImportantButton", ()=>removeImportantButton);
-var _checkedViewJs = require("./checkedView.js");
+parcelHelpers.export(exports, "getImportantBtns", ()=>getImportantBtns);
+parcelHelpers.export(exports, "importantBtns", ()=>importantBtns);
+parcelHelpers.export(exports, "importantHandler", ()=>importantHandler);
 var _formViewJs = require("./formView.js");
 var _taskArrViewJs = require("./taskArrView.js");
 //GLOBAL SCOPE
-const importantBtn = document.querySelector(".btn-important");
-let importantBtnToggled = false;
+let importantBtns = [];
 const addImportantAttribute = function(el) {
-    //selecting index of the task in the taskArr
-    const elementIndex = +el.slice(-1);
-    const index = (0, _taskArrViewJs.taskArr).findIndex((element)=>element.itemNum === elementIndex);
     //reassigning the important field for the currently selected task
-    if (!(0, _taskArrViewJs.taskArr)[index].important) (0, _taskArrViewJs.taskArr)[index].important = true;
-    else (0, _taskArrViewJs.taskArr)[index].important = false;
+    if (!el.important) el.important = true;
+    else el.important = false;
 };
-const importantBtnHandler = function() {
-    //adding the important attribute to all tasks currently checked
-    (0, _checkedViewJs.checked).forEach((el)=>{
-        addImportantAttribute(el);
-    });
-    //rerender the list with updated important field values
+///////////////////////////////////////////////
+const getImportantBtns = function() {
+    importantBtns = [
+        ...document.querySelectorAll(".important-star-btn")
+    ];
+};
+const importantHandler = function(e) {
+    const elementIndex = +e.target.closest(".list-item").classList[1].slice(-1);
+    const index = (0, _taskArrViewJs.taskArr).findIndex((el)=>el.itemNum === elementIndex);
+    if (!(0, _taskArrViewJs.taskArr)[index].important) {
+        //add the important attribute to the element
+        addImportantAttribute((0, _taskArrViewJs.taskArr)[index]);
+        //toggle the correct icons
+        e.target.closest(".unimportant").classList.add("hidden");
+        e.target.closest(".task-actions").querySelector(".important").classList.remove("hidden");
+    } else if ((0, _taskArrViewJs.taskArr)[index].important) {
+        //toggle the imporant attribute to the element
+        addImportantAttribute((0, _taskArrViewJs.taskArr)[index]);
+        e.target.closest(".important").classList.add("hidden");
+        e.target.closest(".task-actions").querySelector(".unimportant").classList.remove("hidden");
+    }
+    //rerender the list
     (0, _formViewJs.renderList)();
 };
-const renderImportantButton = function() {
-    if (!(importantBtn.classList[1] === "hidden")) {
-        importantBtnToggled = true;
-        importantBtn.classList.add("hidden");
-    }
-};
-const removeImportantButton = function() {
-    if (importantBtnToggled) importantBtn.classList.remove("hidden");
-    importantBtnToggled = false;
-};
 
-},{"./checkedView.js":"fc2We","./formView.js":"ckTVq","./taskArrView.js":"elewV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bgng3":[function(require,module,exports) {
+},{"./formView.js":"ckTVq","./taskArrView.js":"elewV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bgng3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "renderLocalStorage", ()=>renderLocalStorage);
@@ -1107,8 +1131,6 @@ const renderLocalStorage = function() {
     (0, _formViewJs.renderList)();
     //refresh checkedArr
     (0, _checkedViewJs.refreshCheckedArr)((0, _taskArrViewJs.taskArr));
-    //render the important button if needed
-    if ((0, _checkedViewJs.checked).length > 0) document.querySelector(".btn-important").classList.remove("hidden");
 };
 
 },{"./taskArrView.js":"elewV","./formView.js":"ckTVq","./checkedView.js":"fc2We","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6Cl1e":[function(require,module,exports) {
@@ -1139,20 +1161,39 @@ const getOptions = (filename, element)=>{
             scale: 2
         },
         jsPDF: {
-            unit: "mm",
+            unit: "in",
             width: element.offsetWidth,
             height: element.offsetHeight,
-            orientation: "landscape"
+            orientation: "portrait"
         }
     };
     return opt;
 };
 const generatePDF = function() {
-    const element = document.querySelector(".list-container");
+    const element = document.querySelector(".list-elements");
     const opt = getOptions("to_do_list", element);
     html2pdf().set(opt).from(element).save();
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gAoaA","6rimH"], "6rimH", "parcelRequiree5c7")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iq4de":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "clearAllHandler", ()=>clearAllHandler);
+var _checkedViewJs = require("./checkedView.js");
+var _sortViewJs = require("./sortView.js");
+var _taskArrViewJs = require("./taskArrView.js");
+var _formViewJs = require("./formView.js");
+const clearAllHandler = function() {
+    //reset task Array, checked arrays, and sorted arrays
+    (0, _taskArrViewJs.resetTaskArr)();
+    (0, _checkedViewJs.resetChecked)();
+    (0, _sortViewJs.resetSorted)();
+    //reset local storage
+    localStorage.clear();
+    //rerender the new list
+    (0, _formViewJs.renderList)();
+};
+
+},{"./checkedView.js":"fc2We","./sortView.js":"aSWOM","./taskArrView.js":"elewV","./formView.js":"ckTVq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gAoaA","6rimH"], "6rimH", "parcelRequiree5c7")
 
 //# sourceMappingURL=index.8cfc62b9.js.map

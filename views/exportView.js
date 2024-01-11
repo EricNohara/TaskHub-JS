@@ -1,5 +1,5 @@
 //GLOBAL SCOPE
-const exportBtn = document.querySelector(".btn-export");
+const exportBtn = document.getElementById("export-btn");
 
 const renderExportBtn = function () {
   exportBtn.classList.toggle("hidden-transition");
@@ -33,4 +33,4 @@ const generatePDF = function () {
   html2pdf().set(opt).from(element).save();
 };
 
-export { renderExportBtn, removeExportBtn, generatePDF };
+export { renderExportBtn, removeExportBtn, generatePDF, exportBtn };

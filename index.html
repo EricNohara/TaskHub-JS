@@ -11,6 +11,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/61739c9a9f.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <script type="module" src="script.js"></script>
@@ -23,24 +27,18 @@
           <button class="btn-open-form">
             <p>+</p>
             Add Task
+        <nav>
+          <h1 class="list-title">TaskHub</h1>
+          <button class="btn-open-form header-btn">
+            <i class="header-icon fa-solid fa-plus"></i>Add Task
           </button>
-          <button class="btn-sort-tasks">
-            <img
-              class="sort-icon"
-              src="/imgs/sort.png"
-              alt="Sort Tasks Button"
-            />
-            sort
+          <button class="btn-sort-tasks header-btn">
+            <i class="header-icon fa-solid fa-sort"></i>Sort
           </button>
-          <button class="btn-clear">
-            <img
-              class="clear-icon"
-              src="/imgs/trash-xmark.png"
-              alt="Clear all icon"
-            />
-            Clear All
+          <button class="btn-clear header-btn">
+            <i class="header-icon fa-solid fa-trash"></i>Clear All
           </button>
-        </div>
+        </nav>
         <!-- LIST ITEMS -->
         <ul class="list-elements">
           <!-- <li class="start-msg list-item">
@@ -66,13 +64,9 @@
         </ul>
       </div>
 
-      <button class="btn-export">
-        <img
-          class="img-export"
-          src="/imgs/file-export.png"
-          alt="Export Button"
-        />
-      </button>
+      <div id="export-btn">
+        <i class="export-icon fa-solid fa-file-export fa-3x"></i>
+      </div>
 
       <div class="form-container hidden">
         <h3 class="form-header">Enter Task to Add to List</h3>
